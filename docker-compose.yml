@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 services:
   # doc:
     # build:
@@ -111,9 +111,9 @@ services:
       - MOSQUITTOCONF_auth_opt_http_aclcheck_uri=/mqtt/acl
     ports:
       - 1883:1883
-      - 9883:9883
+      - 9001:9001
 # 1883 for mqtt
-# 9883 for websocket
+# 9001 for websocket
 
 networks:
   default:
