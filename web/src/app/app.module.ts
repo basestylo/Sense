@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
+import { environment }   from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent }         from './app.component';
@@ -13,7 +14,6 @@ import { ActuatorService }          from './actuator.service';
 import { DeviceService }          from './device.service';
 import { MetricService }          from './metric.service';
 import { MeasureService }          from './measure.service';
-// import { DeviceSearchComponent }  from './device-search.component';
 import { ActuatorDetailComponent }      from './actuator-detail.component';
 import { MetricDetailComponent }      from './metric-detail.component';
 import { ActuatorsComponent }      from './actuators.component';
@@ -30,9 +30,9 @@ import { IMqttMessage,
 import { Subscription } from 'rxjs';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
-  hostname: 'localhost',
+  hostname: environment.mqttHost,
   port: 9883,
-  path: '/mqtt'
+  path: '/'
 };
 
 @NgModule({
