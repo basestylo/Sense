@@ -33,7 +33,7 @@ spec:
           value: /mqtt/superuser
         - name: MOSQUITTOCONF_auth_opt_superusers
           value: admin
-        image: basestylo/sense_mqtt
+        image: basestylo/sense_mqtt:$TAG
         name: mqtt
         ports:
         - containerPort: 1883
