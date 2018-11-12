@@ -66,11 +66,12 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: apt-get install kubectl
+      - run: apt-get install -y kubectl gettext-base
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
           gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+          gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}
       - run: cd infra && ./deploy-web.sh
 
   deploy-app:
@@ -79,11 +80,12 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: apt-get install kubectl
+      - run: apt-get install -y kubectl gettext-base
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
           gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+          gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}
       - run: cd infra && ./deploy-app.sh
 
   deploy-mqtt:
@@ -92,11 +94,12 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: apt-get install kubectl
+      - run: apt-get install -y kubectl gettext-base
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
           gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+          gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}
       - run: cd infra && ./deploy-mqtt.sh
 
 workflows:
@@ -116,10 +119,13 @@ workflows:
           filters:
             branches:
               only: kube
-      - deploy-mqtt:
+      - approval-mqtt-deploy:
           type: approval
           requires:
             - build
           filters:
             branches:
               only: kube
+      - deploy-mqtt:
+          requires:
+            - approval-mqtt-deploy

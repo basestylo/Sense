@@ -24,7 +24,9 @@ spec:
           value: postgres
         - name: PG_USERNAME
           value: postgres
-        image: eu.gcr.io/sense-219918/$TAG
+        - name: MQTT_HOST
+          value: mqtt
+        image: eu.gcr.io/sense-219918/sense_app:$TAG
         name: app
         ports:
           - containerPort: 4000

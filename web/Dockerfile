@@ -14,7 +14,7 @@ RUN apt-get clean
 
 ADD . /app
 WORKDIR /app
-RUN npm install
+RUN npm install --silent
 ENTRYPOINT []
 CMD ["npm", "run", "start"]
 
@@ -23,7 +23,7 @@ FROM node:10.12-slim as build-stage
 # ENV NODE_ENV production
 ADD . /app
 WORKDIR /app
-RUN npm install
+RUN npm install --silent
 ARG configuration=production
 
 RUN npm run build -- --output-path=./dist/out --configuration $configuration
