@@ -8,6 +8,8 @@ else
     echo "Using tag $TAG"
 fi
 
+set -e
+
 gcloud auth configure-docker --quiet
 
 export PROJECT_ID="$(gcloud config get-value project -q)"

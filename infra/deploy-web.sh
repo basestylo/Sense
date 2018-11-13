@@ -8,18 +8,19 @@ else
     echo "Using tag $TAG"
 fi
 
+set -e
+
 gcloud auth configure-docker --quiet
 
 export PROJECT_ID="$(gcloud config get-value project -q)"
 
 # APP: Angular Frontend app
 docker build ../web -t sense_web:latest --target prod-image
-
 docker tag sense_web:latest eu.gcr.io/${PROJECT_ID}/sense_web:$TAG
 docker tag sense_web:latest eu.gcr.io/${PROJECT_ID}/sense_web:latest
 
+# Deploy
 docker push eu.gcr.io/${PROJECT_ID}/sense_web:$TAG
 docker push eu.gcr.io/${PROJECT_ID}/sense_web:latest
 
-# Deploy
 envsubst < kubernetes/web-deployment.yaml | kubectl apply -f -
