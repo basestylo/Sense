@@ -78,10 +78,10 @@ export class MetricDetailComponent implements OnInit {
 
   destroy(): void {
     this.metricService.delete(this.metric.id, this.metric.device_id)
-      .then(
-        () =>
-          this.openSnackBar('Metric destroyed', '') ||
-          this.goBack());
+      .then(() => {
+        this.openSnackBar('Metric destroyed', '');
+        this.goBack();
+      });
   }
 
   goBack(): void {

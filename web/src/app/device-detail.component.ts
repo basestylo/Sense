@@ -20,7 +20,7 @@ export class DeviceDetailComponent implements OnInit {
   actuators: Metric[];
   device: Device;
   metrics: Metric[];
-  
+
   constructor(
     private actuatorService: ActuatorService,
     private deviceService: DeviceService,
@@ -39,13 +39,13 @@ export class DeviceDetailComponent implements OnInit {
       .subscribe(metrics => this.metrics = metrics);
     this.route.params
       .switchMap((params: Params) => this.actuatorService.getActuators(+params['id']))
-      .subscribe(actuators => this.actuators = actuators);    
+      .subscribe(actuators => this.actuators = actuators);
   }
 
-  openSnackBar(message: string, action: string) {
+  openSnackBar(message: string, action: string): void {
     this.snackBar.open(message, action, { duration: 2000 });
   }
-  
+
   save(): void {
     this.deviceService.update(this.device)
       .then(() =>  this.openSnackBar('Device saved', ''));
@@ -53,11 +53,12 @@ export class DeviceDetailComponent implements OnInit {
 
   destroy(): void {
     this.deviceService.delete(this.device.id)
-      .then(() =>
-            this.openSnackBar('Metric destroyed', '') ||
-            this.goBack());
+      .then(() => {
+        this.openSnackBar('Metric destroyed', '');
+        this.goBack()
+      });
   }
-  
+
   goBack(): void {
     this.location.back();
   }

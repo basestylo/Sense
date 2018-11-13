@@ -57,10 +57,10 @@ export class ActuatorDetailComponent implements OnInit, OnDestroy {
 
   destroy(): void {
     this.actuatorService.delete(this.actuator.id)
-      .then(
-        () =>
-          this.openSnackBar('Actuator destroyed', '') &&
-          this.goBack());
+      .then(() => {
+        this.openSnackBar('Actuator destroyed', '');
+        this.goBack();
+      });
   }
 
   goBack(): void {
