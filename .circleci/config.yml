@@ -121,8 +121,6 @@ workflows:
               only: kube
       - approval-mqtt-deploy:
           type: approval
-          requires:
-            - build
           filters:
             branches:
               only: kube
