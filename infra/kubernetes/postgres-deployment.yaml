@@ -26,9 +26,16 @@ spec:
         image: postgres:9.6.3
         name: postgres
         ports:
-        - containerPort: 5432
+         - containerPort: 5432
+        volumeMounts:
+          - name: postgres-storage
+            mountPath: /var/lib/postgresql/db-data
         resources:
           requests:
             cpu: "250m"
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim
       restartPolicy: Always
 status: {}
