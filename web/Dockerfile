@@ -30,4 +30,5 @@ RUN npm run build -- --output-path=./dist/out --configuration $configuration
 
 #Multistage production server
 FROM nginx:1.15 as prod-image
+COPY infra/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-stage /app/dist/out/ /usr/share/nginx/html
