@@ -23,7 +23,7 @@ jobs:
           name: "Install base deps"
           command: |
             apt-get update -qq
-            apt-get install -y build-essential libpq-dev nodejs locales nano
+            apt-get install -y build-essential libpq-dev nodejs locales
             echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
       - run: locale-gen
       - checkout
