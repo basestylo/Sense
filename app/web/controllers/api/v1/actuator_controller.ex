@@ -1,6 +1,7 @@
 defmodule Sense.Api.V1.ActuatorController do
   use Sense.Web, :controller
-  alias Sense.{Device, Actuator}
+  alias Sense.{Actuator, Device}
+  alias Tortoise.Handler.SenseMQTT
 
   def index(conn, %{"device_id" => device_id}) do
     actuators = Actuator |> where([m], m.device_id == ^device_id) |> Repo.all
@@ -30,7 +31,7 @@ defmodule Sense.Api.V1.ActuatorController do
   end
 
   def update(conn, %{"id" => id, "device_id" => device_id, "actuator" => actuator_params}) do
-    actuator = Repo.get!(Actuator, id) |> Repo.preload([device: :user])
+    actuator = Actuator |> Repo.get!(id) |> Repo.preload([device: :user])
     changeset = Actuator.changeset(actuator, actuator_params)
 
     case Repo.update(changeset) do

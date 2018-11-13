@@ -1,5 +1,6 @@
 defmodule Sense.Measure do
   use Instream.Series
+  alias Sense.{Influx}
   import Instream.Query.Builder
 
   series do
@@ -10,11 +11,18 @@ defmodule Sense.Measure do
     field :value
   end
 
+  @moduledoc """
+  Metric's Measure
+
+  Is the value sent by the Device for a Metric
+  """
+
   def by_metric(metric) do
-    results = from(Sense.Measure)
+    results = Sense.Measure
+    |> from
     |> select(["value"])
     |> where(%{metric_id: Integer.to_string(metric.id)})
-    |> Sense.Influx.query()
+    |> Influx.query()
 
     data = results[:results] |> List.first
     case data[:series] do
@@ -36,14 +44,14 @@ defmodule Sense.Measure do
         data = %{data | tags: %{data.tags | metric_id: metric.id}}
 
         data
-        |> Sense.Influx.write(async: async)
+        |> Influx.write(async: async)
         :ok
     end
   end
 
   def delete_measures(metric) do
     "DELETE FROM device_metrics WHERE metric_id = #{metric.id}"
-    |> Sense.Influx.execute(method: :post)
+    |> Influx.execute(method: :post)
 
     :ok
   end
@@ -51,12 +59,12 @@ defmodule Sense.Measure do
   def create_database do
     "device_metrics"
     |> Instream.Admin.Database.create()
-    |> Sense.Influx.execute()
+    |> Influx.execute()
   end
 
   def delete_database do
     "device_metrics"
     |> Instream.Admin.Database.drop()
-    |> Sense.Influx.execute()
+    |> Influx.execute()
   end
 end

@@ -1,6 +1,6 @@
 defmodule Sense.UserController do
   use Sense.Web, :controller
-  alias Sense.User
+  alias Sense.{Auth, Login, User}
 
   plug :scrub_params, "user" when action in [:create]
 
@@ -20,13 +20,11 @@ defmodule Sense.UserController do
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
-        |> Sense.Auth.login(user)
+        |> Auth.login(user)
         |> put_flash(:info, "#{user.username} created!")
         |> redirect(to: user_path(conn, :show, user))
       {:error, changeset} ->
-        IO.inspect changeset
         render(conn, "new.html", changeset: changeset)
     end
   end
 end
-

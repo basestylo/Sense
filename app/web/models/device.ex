@@ -11,6 +11,12 @@ defmodule Sense.Device do
     belongs_to :user, Sense.User
   end
 
+  @moduledoc """
+  User's Device
+
+  It's the representation of a external device, an aggregation of metrics.
+  """
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """

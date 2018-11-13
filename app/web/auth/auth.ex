@@ -1,7 +1,12 @@
 defmodule Sense.Auth do
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
-  alias Sense.User
-  alias Sense.Repo
+  alias Sense.{Repo, User}
+
+  @moduledoc """
+  User Authentication
+
+  It has the basic methods to manage user sessions and authentication
+  """
 
   def login(conn, user) do
     conn
@@ -9,7 +14,7 @@ defmodule Sense.Auth do
   end
 
   def login_by_email_and_pass(conn, email, given_pass) do
-    login_by_defined_parameters_and_pass(conn, %{ email: email }, given_pass)
+    login_by_defined_parameters_and_pass(conn, %{email: email}, given_pass)
   end
 
   def login_by_defined_parameters_and_pass(conn, parameters, given_pass) do

@@ -1,23 +1,23 @@
 defmodule Sense.Api.V1.DeviceController do
   use Sense.Web, :controller
 
-  alias Sense.{User, Device}
+  alias Sense.{Device, User}
 
   def index(conn, _params) do
     devices = Repo.all(Device)
     render(conn, "index.json", resources: devices)
   end
 
-  def create(conn, %{"device" => device_params}) do 
+  def create(conn, %{"device" => device_params}) do
     user = User
     |> order_by(desc: :inserted_at)
     |> limit(1)
     |> Repo.one
-    
+
     device_params = Map.merge(device_params, %{"user" => user})
 
-    changeset = Device.changeset(%Device{ }, device_params)
-    
+    changeset = Device.changeset(%Device{}, device_params)
+
     case Repo.insert(changeset) do
       {:ok, device} ->
         conn

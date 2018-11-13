@@ -9,6 +9,12 @@ defmodule Sense.Metric do
     timestamps()
   end
 
+  @moduledoc """
+  Device's Metric.
+
+  Represent a input of data from any device.
+  """
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """

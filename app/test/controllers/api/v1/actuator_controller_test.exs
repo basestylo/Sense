@@ -1,11 +1,11 @@
 defmodule Sense.Api.V1.ActuatorControllerTest do
   use Sense.ConnCase
   import Sense.Factory
-  alias Sense.{Device, Actuator}
-  
+  alias Sense.{Actuator, Device}
+
   @valid_attrs %{description: "some content", name: "some content", type: "button", value: 0}
   @invalid_attrs %{description: "some content", name: "some content", type: "button", value: 1000}
-   
+
   setup %{conn: conn} do
     actuator = insert(:actuator)
     {:ok, %{conn: put_req_header(conn, "accept", "application/json"), device: actuator.device, actuator: actuator}}
@@ -18,7 +18,7 @@ defmodule Sense.Api.V1.ActuatorControllerTest do
                                                   "id" => actuator.id,
                                                   "name" => actuator.name,
                                                   "type" => actuator.type,
-                                                  "value" => actuator.value }]
+                                                  "value" => actuator.value}]
   end
 
   test "shows chosen resource", %{conn: conn, device: device, actuator: actuator} do

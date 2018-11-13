@@ -2,7 +2,7 @@ defmodule Sense.Api.V1.MeasureControllerTest do
   use Sense.ConnCase
   import Sense.Factory
   alias Sense.Measure
-  
+
   setup %{conn: conn} do
     metric = insert(:metric)
     {:ok, %{conn: put_req_header(conn, "accept", "application/json"), device: metric.device, metric: metric}}
@@ -14,7 +14,7 @@ defmodule Sense.Api.V1.MeasureControllerTest do
     Measure.write_measure(metric, 3)
 
     :timer.sleep(1000)
-    
+
     conn = get conn, api_v1_device_metric_measure_path(conn, :index, device.id, metric.id )
     measure = json_response(conn, 200)["data"] |> List.first
     assert measure["value"] == 1

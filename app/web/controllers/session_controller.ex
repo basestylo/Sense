@@ -1,5 +1,6 @@
 defmodule Sense.SessionController do
   use Sense.Web, :controller
+  alias Sense.{Auto}
   plug :scrub_params, "session" when action in ~w(create)a
 
   def new(conn, _) do
@@ -8,8 +9,8 @@ defmodule Sense.SessionController do
 
   def create(conn, %{"session" => %{"email" => email,
                                     "password" => password}}) do
-  
-    case Sense.Auth.login_by_email_and_pass(conn, email,
+
+    case Auth.login_by_email_and_pass(conn, email,
           password) do
       {:ok, conn} ->
         conn
@@ -24,7 +25,7 @@ defmodule Sense.SessionController do
 
   def delete(conn, _) do
     conn
-    |> Sense.Auth.logout
+    |> Auth.logout
     |> put_flash(:info, "See you later!")
     |> redirect(to: page_path(conn, :index))
   end

@@ -15,6 +15,10 @@ defmodule Sense.User do
     has_many :devices, Sense.Device
   end
 
+  @moduledoc """
+  User Model
+  """
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
@@ -35,11 +39,11 @@ defmodule Sense.User do
   end
 
   defp user_params do
-    [ :email,
-      :first_name,
-      :last_name,
-      :username,
-      :password ]
+    [:email,
+     :first_name,
+     :last_name,
+     :username,
+     :password]
   end
 
   defp generate_encrypted_password(current_changeset) do

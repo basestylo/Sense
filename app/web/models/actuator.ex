@@ -11,6 +11,12 @@ defmodule Sense.Actuator do
     timestamps()
   end
 
+  @moduledoc """
+  Device's Actuator
+
+  It's the repesentation of an actuator for a device, Has state, and user can modify it.
+  """
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
@@ -23,7 +29,7 @@ defmodule Sense.Actuator do
   end
 
   def validate_value_by_type(changeset, options \\ []) do
-    value= get_field(changeset, :value)
+    value = get_field(changeset, :value)
     type = get_field(changeset, :type)
     if type == "value" or type == "button" and (value == 0 or value == 1) do
       changeset
