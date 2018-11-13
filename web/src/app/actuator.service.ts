@@ -1,5 +1,6 @@
 import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import { environment }   from '../environments/environment';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -9,7 +10,7 @@ import { Actuator } from './actuator';
 export class ActuatorService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
-  private devicesUrl = 'http://localhost:4000/api/v1/devices';
+  private devicesUrl = environment.apiUrl + '/api/v1/devices';
 
   constructor(private http: Http) { }
 
@@ -33,7 +34,7 @@ export class ActuatorService {
     const url = `${this.devicesUrl}/${id}`;
     return this.http.delete(url, {headers: this.headers})
       .toPromise()
-      .then(() => null) 
+      .then(() => null)
       .catch(this.handleError);
   }
 
@@ -62,4 +63,3 @@ export class ActuatorService {
     return Promise.reject(error.message || error);
   }
 }
-

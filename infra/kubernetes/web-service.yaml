@@ -17,7 +17,7 @@ spec:
   - nodePort: 30649
     port: 80
     protocol: TCP
-    targetPort: 4200
+    targetPort: 80
   selector:
     io.kompose.service: web
   sessionAffinity: None

@@ -23,7 +23,7 @@ jobs:
           name: "Install base deps"
           command: |
             apt-get update -qq
-            apt-get install -y build-essential libpq-dev nodejs locales nano
+            apt-get install -y build-essential libpq-dev nodejs locales
             echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
       - run: locale-gen
       - checkout
@@ -60,3 +60,70 @@ jobs:
           paths: "./app/_build"
       - store_test_results:
           path: "./app/tmp/reports"
+  deploy-web:
+    docker:
+      - image: google/cloud-sdk:latest
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: apt-get install -y kubectl gettext-base
+      - run: |
+          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+          gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}
+      - run: cd infra && ./deploy-web.sh
+
+  deploy-app:
+    docker:
+      - image: google/cloud-sdk:latest
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: apt-get install -y kubectl gettext-base
+      - run: |
+          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+          gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}
+      - run: cd infra && ./deploy-app.sh
+
+  deploy-mqtt:
+    docker:
+      - image: google/cloud-sdk:latest
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: apt-get install -y kubectl gettext-base
+      - run: |
+          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+          gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}
+      - run: cd infra && ./deploy-mqtt.sh
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy-web:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+      - deploy-app:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+      - approval-mqtt-deploy:
+          type: approval
+          filters:
+            branches:
+              only: master
+      - deploy-mqtt:
+          requires:
+            - approval-mqtt-deploy

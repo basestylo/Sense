@@ -7,7 +7,7 @@ RUN apt-get clean && apt-get update && apt-get install -y --force-yes --fix-miss
   build-essential \
   inotify-tools
 
-  
+
 #Install nodejs
 RUN groupadd --gid 1000 node \
   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
@@ -69,7 +69,7 @@ RUN set -ex \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
-  
+
 #Cleaning
 RUN apt-get clean
 
@@ -82,5 +82,8 @@ RUN mix local.rebar --force
 
 ADD . /app
 WORKDIR /app
+
+ENV MIX_ENV prod
+RUN mix deps.get && mix compile
 ENTRYPOINT []
 CMD ["mix", "phoenix.server"]

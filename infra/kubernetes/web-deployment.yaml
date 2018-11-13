@@ -22,7 +22,7 @@ spec:
           value: postgres
         - name: PG_USERNAME
           value: postgres
-        image: eu.gcr.io/sense-219918/sense_web:latest
+        image: eu.gcr.io/sense-219918/sense_web:$TAG
         name: app
         ports:
           - containerPort: 4200

@@ -21,10 +21,10 @@ import {
 })
 
 export class ActuatorDetailComponent implements OnInit, OnDestroy {
-  private actuator: Actuator;
-  private subscription: Subscription; 
+  actuator: Actuator;
+  private subscription: Subscription;
   private message: string;
-  
+
   constructor(
     private actuatorService: ActuatorService,
     private route: ActivatedRoute,
@@ -32,7 +32,7 @@ export class ActuatorDetailComponent implements OnInit, OnDestroy {
     private _mqttService: MqttService,
     public snackBar: MatSnackBar
   ) {}
-  
+
   ngOnInit(): void {
     this.route.params
       .switchMap((params: Params) => this.actuatorService.getActuator(+params['device_id'], +params['id']))
@@ -49,7 +49,7 @@ export class ActuatorDetailComponent implements OnInit, OnDestroy {
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, { duration: 2000 });
   }
-  
+
   save(): void {
     this.actuatorService.update(this.actuator)
       .then(() =>  this.openSnackBar('Actuator saved', ''));

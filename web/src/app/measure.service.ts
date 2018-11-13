@@ -1,5 +1,6 @@
 import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import { environment }   from '../environments/environment';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -9,7 +10,7 @@ import { Measure } from './measure';
 export class MeasureService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
-  private devicesUrl = 'http://localhost:4000/api/v1/devices';
+  private devicesUrl = environment.apiUrl + '/api/v1/devices';
 
   constructor(private http: Http) { }
 
@@ -33,4 +34,3 @@ export class MeasureService {
     return Promise.reject(error.message || error);
   }
 }
-

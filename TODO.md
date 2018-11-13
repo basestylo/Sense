@@ -1,0 +1,12 @@
+# Things to do:
+-1- Deployment process to production and staging
+-2- Mqtt for browser update
+-3- Charts
+-4- Users
+-5- User profile edit
+-6- Alerts
+-7- ML alerts / detection of strange events
+-8- Autogenerate code for some boards
+-9- Arduino lib
+-10- Update Phoenix
+-11- Update Angular

@@ -1,13 +1,52 @@
 defmodule Tortoise.Handler.SenseMQTT do
+  require Logger
+
   use Tortoise.Handler
   alias Sense.{Repo, User, Device, Metric, Measure, Actuator}
 
   def init(args) do
+    Logger.info("Initializing handler")
     {:ok, args}
   end
 
-  def connection(status, state) do
+  def connection(:up, state) do
+    Logger.info("Connection has been established")
     {:ok, state}
+  end
+
+  def connection(:down, state) do
+    Logger.info("Connection has been dropped")
+    {:ok, state}
+  end
+
+  def connection(:terminating, state) do
+    Logger.warn("Connection is terminating")
+    {:ok, state}
+  end
+
+   def subscription(:up, topic, state) do
+    Logger.info("Subscribed to #{topic}")
+    {:ok, state}
+  end
+
+  def subscription({:warn, [requested: req, accepted: qos]}, topic, state) do
+    Logger.warn("Subscribed to #{topic}; requested #{req} but got accepted with QoS #{qos}")
+    {:ok, state}
+  end
+
+  def subscription({:error, reason}, topic, state) do
+    Logger.error("Error subscribing to #{topic}; #{inspect(reason)}")
+    {:ok, state}
+  end
+
+  def subscription(:down, topic, state) do
+    Logger.info("Unsubscribed from #{topic}")
+    {:ok, state}
+  end
+
+  def terminate(reason, _state) do
+    Logger.warn("Client has been terminated with reason: #{inspect(reason)}")
+    :ok
   end
 
   def send_message([username, device_name, metric_name], payload) do
@@ -36,7 +75,8 @@ defmodule Tortoise.Handler.SenseMQTT do
 
   def handle_message([username, device_name, "actuator", actuator_name], payload, state) do
     {:ok, device} = check_and_autogenerate_relationships(username, device_name)
-    value = parse_payload(payload)
+    value = parse_payload(payload, Integer)
+    IO.inspect value
 
     {:ok, metric} =
       case Repo.get_by(Actuator, device_id: device.id, name: actuator_name) do
@@ -59,17 +99,6 @@ defmodule Tortoise.Handler.SenseMQTT do
     {:ok, state}
   end
 
-  def subscription(status, topic_filter, state) do
-    {:ok, state}
-  end
-
-  def terminate(reason, state) do
-    # tortoise doesn't care about what you return from terminate/2,
-    # that is in alignment with other behaviours that implement a
-    # terminate-callback
-    :ok
-  end
-
   defp check_and_autogenerate_relationships(username, device_name) do
       user = Repo.get_by!(User, username: username)
 
@@ -82,7 +111,7 @@ defmodule Tortoise.Handler.SenseMQTT do
       |> Repo.insert_or_update
   end
 
-  defp parse_payload(payload) do
-    Float.parse(payload) |> Tuple.to_list |> List.first
+  defp parse_payload(payload, type  \\ Float) do
+    type.parse(payload) |> Tuple.to_list |> List.first
   end
 end
