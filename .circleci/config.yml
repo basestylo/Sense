@@ -112,18 +112,18 @@ workflows:
             - build
           filters:
             branches:
-              only: kube
+              only: master
       - deploy-app:
           requires:
             - build
           filters:
             branches:
-              only: kube
+              only: master
       - approval-mqtt-deploy:
           type: approval
           filters:
             branches:
-              only: kube
+              only: master
       - deploy-mqtt:
           requires:
             - approval-mqtt-deploy
