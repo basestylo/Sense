@@ -1,5 +1,54 @@
 version: 2
 jobs:
+  linter:
+    docker:
+      - image: elixir:1.7.3
+        environment:
+          - MIX_ENV=test
+          - PG_USERNAME=sense
+          - PG_PASSWORD=sense
+          - PG_HOST=localhost
+          - INFLUXDB_HOST=localhost
+          - MQTT_HOST=localhost
+      - image: influxdb:1.2.4
+      - image: eclipse-mosquitto:latest
+      - image: postgres:9.6.3-alpine
+        environment:
+          - POSTGRES_USER=sense
+          - POSTGRES_PASSWORD=sense
+          - POSTGRES_DB=sense_test
+    steps:
+      - setup_remote_docker
+      - run:
+          name: "Install base deps"
+          command: |
+            apt-get update -qq
+            apt-get install -y build-essential libpq-dev nodejs locales
+            echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+      - run: locale-gen
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+            - v1-mix-build-cache-{{ .Branch }}
+            - v1-mix-build-cache
+      - restore_cache:
+          keys:
+            - v1-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+            - v1-mix-deps-cache-{{ .Branch }}
+            - v1-mix-deps-cache
+      - run: mix local.hex --force && mix local.rebar --force
+      - run: cd app && mix deps.get
+      - save_cache:
+          key: v1-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+          paths: "./app/deps"
+      - save_cache:
+          key: v1-mix-deps-cache-{{ .Branch }}
+          paths: "./app/deps"
+      - save_cache:
+          key: v1-mix-deps-bundle-cache
+          paths: "./app/deps"
+      - run: cd app && mix credo list --strict
   build:
     docker:
       - image: elixir:1.7.3
@@ -107,6 +156,7 @@ workflows:
   build-and-deploy:
     jobs:
       - build
+      - linter
       - deploy-web:
           requires:
             - build

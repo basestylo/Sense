@@ -2,7 +2,7 @@ defmodule Sense.MqttAuthenticatorController do
   use Sense.Web, :controller
   alias Sense.{User}
 
-  def user(conn, %{ "username" => username, "password" => password }) do
+  def user(conn, %{"username" => username, "password" => password}) do
     case Repo.get_by(User, username: username, encrypted_password: password) do
       nil ->
         conn
@@ -15,7 +15,7 @@ defmodule Sense.MqttAuthenticatorController do
     end
   end
 
-  def superuser(conn, %{ "username" => user }) do
+  def superuser(conn, %{"username" => user}) do
     case user do
       "JohnDoEx" ->
         conn
@@ -30,7 +30,6 @@ defmodule Sense.MqttAuthenticatorController do
 
   def acl(conn, params) do
     # TODO: Perform topic and acc checks
-    IO.inspect params
     conn
     |> put_status(:ok)
     |> text("OK #{inspect params}")

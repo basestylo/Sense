@@ -1,10 +1,10 @@
 defmodule Sense.Api.V1.DeviceControllerTest do
   use Sense.ConnCase
   import Sense.Factory
-  
-  @device_valid_attrs %{ name: "Name", description: "short description" }
-  @device_invalid_attrs %{ name: "", description: "" }
-  
+
+  @device_valid_attrs %{name: "Name", description: "short description"}
+  @device_invalid_attrs %{name: "", description: ""}
+
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
@@ -16,7 +16,7 @@ defmodule Sense.Api.V1.DeviceControllerTest do
 
   test "shows chosen resource", %{conn: conn} do
     device = insert(:device)
-      
+
     conn = get conn, api_v1_device_path(conn, :show, device)
     assert json_response(conn, 200)["data"] == %{
       "name" => device.name,
@@ -41,7 +41,7 @@ defmodule Sense.Api.V1.DeviceControllerTest do
     }
 
     conn = post conn, api_v1_device_path(conn, :create), device: attributes
-        
+
     assert json_response(conn, 201)["data"]["id"]
     assert Repo.get_by(Sense.Device, name: "MyNewDevice")
   end
@@ -53,7 +53,7 @@ defmodule Sense.Api.V1.DeviceControllerTest do
 
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
     device = insert(:device)
-               
+
     conn = put conn, api_v1_device_path(conn, :update, device.id), device: @device_valid_attrs
     assert json_response(conn, 200)["data"]["id"]
     assert Repo.get_by(Sense.Device, @device_valid_attrs)

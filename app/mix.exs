@@ -66,7 +66,10 @@ defmodule Sense.Mixfile do
       {:corsica, "~> 1.0"},
 
       #MQTT
-      {:tortoise, "~> 0.9.2"}
+      {:tortoise, "~> 0.9.2"},
+
+      #LINTER
+      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false}
     ]
   end
 

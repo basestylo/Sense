@@ -1,8 +1,14 @@
 defmodule Sense do
+  alias Sense.{Endpoint, Influx}
   use Application
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
+
+  @moduledoc """
+  Sense Project config: Start, stop, Changes...
+  """
+
   def start(_type, _args) do
     import Supervisor.Spec
 
@@ -14,7 +20,7 @@ defmodule Sense do
       supervisor(Sense.Endpoint, []),
       # Start your own worker by calling: Sense.Worker.start_link(arg1, arg2, arg3)
       # worker(Sense.Worker, [arg1, arg2, arg3]),
-      Sense.Influx.child_spec
+      Influx.child_spec
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -22,7 +28,7 @@ defmodule Sense do
     opts = [strategy: :one_for_one, name: Sense.Supervisor]
     Supervisor.start_link(children, opts)
 
-    {:ok, _pid}= Tortoise.Supervisor.start_child(
+    {:ok, _pid} = Tortoise.Supervisor.start_child(
       client_id: "my_client_id", user_name: "JohnDoEx", password: "foobarfoo",
       handler: {Tortoise.Handler.SenseMQTT, []},
       server: {Tortoise.Transport.Tcp, host: System.get_env("MQTT_HOST") || "localhost", port: 1883},
@@ -32,7 +38,7 @@ defmodule Sense do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    Sense.Endpoint.config_change(changed, removed)
+    Endpoint.config_change(changed, removed)
     :ok
   end
 end

@@ -2,7 +2,7 @@ defmodule Sense.Api.V1.MetricControllerTest do
   use Sense.ConnCase
   import Sense.Factory
   alias Sense.{Device, Metric}
-  
+
   @valid_attrs %{description: "some content", name: "some content"}
   @invalid_attrs %{description: ""}
 

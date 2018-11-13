@@ -2,6 +2,10 @@ defmodule Sense.CurrentUser do
   import Plug.Conn
   import Guardian.Plug
 
+  @moduledoc """
+  Virtual user related with sessions
+  """
+
   def init(opts), do: opts
 
   def call(conn, _opts) do

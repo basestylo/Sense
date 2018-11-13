@@ -1,7 +1,12 @@
 defmodule Sense.Factory do
   use ExMachina.Ecto, repo: Sense.Repo
   Faker.start
-  alias Sense.{ Device, User, Metric, Actuator }
+  alias Sense.{Actuator, Device, Metric, User}
+  alias Comeonin.{Bcrypt}
+
+  @moduledoc """
+  Factory for testing, It has que basic objects
+  """
 
   def user_factory do
     %User{
@@ -9,7 +14,7 @@ defmodule Sense.Factory do
       first_name: "John",
       last_name: "Doe",
       username: "johndoe",
-      encrypted_password: Comeonin.Bcrypt.hashpwsalt("password")
+      encrypted_password: Bcrypt.hashpwsalt("password")
     }
   end
 

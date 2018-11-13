@@ -1,6 +1,10 @@
 defmodule Sense.GuardianErrorHandler do
   import Sense.Router.Helpers
 
+  @moduledoc """
+  Error handler in sessions
+  """
+
   def unauthenticated(conn, _params) do
     conn
     |> Phoenix.Controller.put_flash(:error,

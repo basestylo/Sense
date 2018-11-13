@@ -30,6 +30,7 @@ services:
     build:
       context: ./app
     environment:
+      - MIX_ENV=dev
       - INFLUXDB_HOST=influxdb
       - PG_HOST=postgres
       - PG_USERNAME=postgres

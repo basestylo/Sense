@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  generateName: run-migrations-on-app-
+  name: run-migrations-on-app
 spec:
   containers:
   - name: db-migration

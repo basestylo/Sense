@@ -10,7 +10,7 @@ defmodule Sense.Api.V1.UserController do
 
   def update(conn, %{"user" => resource_params}) do
     changeset = User.changeset(conn.assigns[:resource], resource_params)
-    
+
     case Repo.update(changeset) do
       {:ok, resource} ->
         render(conn, "show.json", resource: resource)
@@ -22,8 +22,6 @@ defmodule Sense.Api.V1.UserController do
   end
 
   def delete(conn) do
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
     #TODO use guardian to locate user by session
     id = 0
     Repo.delete!(conn.assigns[:resource])
@@ -45,5 +43,5 @@ defmodule Sense.Api.V1.UserController do
         |> put_status(:unprocessable_entity)
         |> render(Sense.ErrorView, "error.json", changeset: changeset)
     end
-  end  
+  end
 end

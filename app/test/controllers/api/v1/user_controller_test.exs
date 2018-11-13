@@ -14,7 +14,7 @@ defmodule Sense.Api.V1.UserControllerTest do
     assert conn.status == 200
     assert json_response(conn, 200) == render_json("show.json", resource: user)
   end
-  
+
   test "[POST] Creating a user", %{conn: conn} do
     params = %{
       "user" => %{
@@ -41,7 +41,7 @@ defmodule Sense.Api.V1.UserControllerTest do
     conn = post conn, api_v1_user_path(conn, :create), params
     refute conn.status == 201
   end
-  
+
   #Needs authentication
   @tag :skip
   test "[PUT] Updating a user", %{conn: conn} do
@@ -53,7 +53,7 @@ defmodule Sense.Api.V1.UserControllerTest do
     conn = put conn, api_v1_user_path(conn, :update), params
     assert conn.status == 200
   end
-  
+
   #Needs authentication
   @tag :skip
   test "[PUT] Updating a user with bad params", %{conn: conn, user: user} do

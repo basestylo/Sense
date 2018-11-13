@@ -1,6 +1,6 @@
 defmodule Sense.Api.V1.MeasureController do
   use Sense.Web, :controller
-  alias Sense.{Metric, Measure}
+  alias Sense.{Measure, Metric}
 
   def index(conn, %{"metric_id" => metric_id}) do
     metric = Repo.get!(Metric, metric_id)
@@ -26,7 +26,6 @@ defmodule Sense.Api.V1.MeasureController do
   def delete(conn, %{"metric_id" => metric_id, "device_id" => device_id}) do
     metric = Repo.get_by!(Metric, id: metric_id, device_id: device_id)
     Measure.delete_measures(metric)
-    
 
     send_resp(conn, :no_content, "")
   end

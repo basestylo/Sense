@@ -14,7 +14,7 @@ defmodule Sense.Api.V1.MeasureView do
   end
 
   def render("measure.json", %{measure: measure}) do
-    
+
     %{value: measure[:value],
       timestamp: measure[:timestamp]}
   end

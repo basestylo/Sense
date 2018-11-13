@@ -14,7 +14,7 @@ defmodule Sense.UserTest do
 
   test "changeset with valid attributes" do
     changeset = User.changeset(%User{}, @valid_attrs)
-    assert changeset.valid? 
+    assert changeset.valid?
   end
 
   test "changeset with invalid attributes" do
