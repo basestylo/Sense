@@ -3,20 +3,6 @@ jobs:
   linter:
     docker:
       - image: elixir:1.7.3
-        environment:
-          - MIX_ENV=test
-          - PG_USERNAME=sense
-          - PG_PASSWORD=sense
-          - PG_HOST=localhost
-          - INFLUXDB_HOST=localhost
-          - MQTT_HOST=localhost
-      - image: influxdb:1.2.4
-      - image: eclipse-mosquitto:latest
-      - image: postgres:9.6.3-alpine
-        environment:
-          - POSTGRES_USER=sense
-          - POSTGRES_PASSWORD=sense
-          - POSTGRES_DB=sense_test
     steps:
       - setup_remote_docker
       - run:
@@ -59,8 +45,8 @@ jobs:
           - PG_HOST=localhost
           - INFLUXDB_HOST=localhost
           - MQTT_HOST=localhost
-      - image: influxdb:1.2.4
-      - image: eclipse-mosquitto:latest
+      - image: influxdb:1.6
+      - image: basestylo/sense_mqtt
       - image: postgres:9.6.3-alpine
         environment:
           - POSTGRES_USER=sense
