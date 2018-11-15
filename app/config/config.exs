@@ -37,7 +37,20 @@ config :guardian, Guardian,
   verify_issuer: true,
   serializer: Sense.GuardianSerializer,
   secret_key: to_string(Mix.env) <> "SuperS3CR3tSeNS3ToK3n"
+
+enable_rollbar_reports =  case Mix.env do
+                            "prod" ->
+                              true
+                            _ ->
+                              false
+                          end
+
+config :rollbax,
+  access_token: System.get_env("ROLLBAR_TOKEN") || "token",
+  environment: "#{Mix.env}",
+  enable_crash_reports: enable_rollbar_reports,
+  enabled: enable_rollbar_reports
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-
 import_config "#{Mix.env}.exs"
