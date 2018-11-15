@@ -95,12 +95,16 @@ jobs:
           paths: "./app/_build"
       - store_test_results:
           path: "./app/tmp/reports"
+
   deploy-web:
     docker:
       - image: google/cloud-sdk:latest
     steps:
       - setup_remote_docker
       - checkout
+      - restore_cache:
+          keys:
+            - v1-npm-deps-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
       - run: apt-get install -y kubectl gettext-base
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
@@ -108,6 +112,11 @@ jobs:
           gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
           gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}
       - run: cd infra && ./deploy-web.sh
+      - save_cache:
+          key: v1-npm-deps-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
+          paths: "./web/node_modules"
+      - run: ls -alh
+      - run: ls -alh web
 
   deploy-app:
     docker:
@@ -115,12 +124,19 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
+      - restore_cache:
+          keys:
+            - v1-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+      - restore_cache:
+          keys:
+            - v1-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
       - run: apt-get install -y kubectl gettext-base
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
           gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
           gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}
+
       - run: cd infra && ./deploy-app.sh
 
   deploy-mqtt:
