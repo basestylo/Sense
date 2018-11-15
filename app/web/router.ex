@@ -1,5 +1,10 @@
 defmodule Sense.Router do
   use Sense.Web, :router
+  use Plug.ErrorHandler
+
+  defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
+    Rollbax.report(kind, reason, stacktrace, %{method: conn.method})
+  end
 
   pipeline :browser do
     plug :accepts, ["html"]

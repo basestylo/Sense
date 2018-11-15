@@ -46,7 +46,7 @@ jobs:
           - INFLUXDB_HOST=localhost
           - MQTT_HOST=localhost
       - image: influxdb:1.6
-      - image: basestylo/sense_mqtt
+      - image: eclipse-mosquitto:latest
       - image: postgres:9.6.3-alpine
         environment:
           - POSTGRES_USER=sense

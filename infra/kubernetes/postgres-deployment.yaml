@@ -28,13 +28,13 @@ spec:
         ports:
          - containerPort: 5432
         volumeMounts:
-          - name: postgres-storage
+          - name: postgres-persistent-storage
             mountPath: /var/lib/postgresql/db-data
         resources:
           requests:
             cpu: "250m"
       volumes:
-        - name: postgres-storage
+        - name: postgres-persistent-storage
           persistentVolumeClaim:
             claimName: postgres-pv-claim
       restartPolicy: Always
