@@ -16,6 +16,8 @@ spec:
     spec:
       containers:
       - env:
+        - name: ROLLBAR_TOKEN
+          value: $ROLLBAR_TOKEN
         - name: MIX_ENV
           value: prod
         - name: INFLUXDB_HOST

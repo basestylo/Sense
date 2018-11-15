@@ -24,7 +24,7 @@ defmodule Sense.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Sense, []},
-     applications: [:tortoise, :corsica, :phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
+     applications: [:rollbax, :tortoise, :corsica, :phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex, :ex_machina, :logger, :faker, :comeonin, :instream]]
   end
 
@@ -69,7 +69,10 @@ defmodule Sense.Mixfile do
       {:tortoise, "~> 0.9.2"},
 
       #LINTER
-      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false}
+      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
+
+      #Error reporting
+      {:rollbax, ">= 0.9.2"}
     ]
   end
 
