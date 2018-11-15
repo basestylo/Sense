@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  linter:
+  linter-app:
     docker:
       - image: elixir:1.7.3
     steps:
@@ -25,6 +25,7 @@ jobs:
             - v1-mix-deps-cache
       - run: mix local.hex --force && mix local.rebar --force
       - run: cd app && mix deps.get
+      - run: cd app && mix credo list --strict
       - save_cache:
           key: v1-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
           paths: "./app/deps"
@@ -34,8 +35,8 @@ jobs:
       - save_cache:
           key: v1-mix-deps-bundle-cache
           paths: "./app/deps"
-      - run: cd app && mix credo list --strict
-  build:
+
+  build-app:
     docker:
       - image: elixir:1.7.3
         environment:
@@ -95,6 +96,65 @@ jobs:
           paths: "./app/_build"
       - store_test_results:
           path: "./app/tmp/reports"
+
+  build-web:
+    docker:
+      - image: node:10.12-slim
+        environment:
+          - CHROME_BIN=/usr/bin/chromium
+    steps:
+      - setup_remote_docker
+      - run:
+          name: "Install base deps"
+          command: |
+            apt-get update -qq
+            apt-get install -y build-essential inotify-tools chromium
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-npm-build-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
+            - v1-npm-build-cache-{{ .Branch }}
+            - v1-npm-build-cache
+      - run: cd web && npm install --silent
+      - save_cache:
+          key: v1-npm-build-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
+          paths: "./web/node_modules"
+      - save_cache:
+          key: v1-npm-build-cache-{{ .Branch }}
+          paths: "./web/node_modules"
+      - save_cache:
+          key: v1-npm-build-bundle-cache
+          paths: "./web/node_modules"
+      - run: cd web && npm run test-headless
+      - run: cd web && npm run e2e
+
+  linter-web:
+    docker:
+      - image: node:10.12-slim
+    steps:
+      - setup_remote_docker
+      - run:
+          name: "Install base deps"
+          command: |
+            apt-get update -qq
+            apt-get install -y build-essential inotify-tools
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-npm-build-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
+            - v1-npm-build-cache-{{ .Branch }}
+            - v1-npm-build-cache
+      - run: cd web && npm install --silent
+      - save_cache:
+          key: v1-npm-build-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
+          paths: "./web/node_modules"
+      - save_cache:
+          key: v1-npm-build-cache-{{ .Branch }}
+          paths: "./web/node_modules"
+      - save_cache:
+          key: v1-npm-build-bundle-cache
+          paths: "./web/node_modules"
+      - run: cd web && npm run lint
 
   deploy-web:
     docker:
@@ -157,17 +217,19 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build
-      - linter
+      - build-web
+      - build-app
+      - linter-web
+      - linter-app
       - deploy-web:
           requires:
-            - build
+            - build-app
           filters:
             branches:
               only: master
       - deploy-app:
           requires:
-            - build
+            - build-app
           filters:
             branches:
               only: master
