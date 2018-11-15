@@ -12,9 +12,7 @@ ENV NPM_CONFIG_LOGLEVEL info
 #Cleaning
 RUN apt-get clean
 
-ADD . /app
 WORKDIR /app
-RUN npm install --silent
 ENTRYPOINT []
 CMD ["npm", "run", "start"]
 
