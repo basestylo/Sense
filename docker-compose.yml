@@ -34,6 +34,7 @@ services:
       - INFLUXDB_HOST=influxdb
       - PG_HOST=postgres
       - PG_USERNAME=postgres
+      - MQTT_HOST=mqtt
     depends_on:
       - postgres
       - influxdb
@@ -98,23 +99,26 @@ services:
       - 8083:8083
 
   mqtt:
-    image: basestylo/sense_mqtt
-    build:
-      context: ./infra/mqtt
-      dockerfile: Dockerfile
+    image: emqx/emqx:latest
     environment:
-      - MOSQUITTOCONF_auth_opt_backends=http
-      - MOSQUITTOCONF_auth_opt_superusers=admin
-      - MOSQUITTOCONF_auth_opt_http_hostname=app
-      - MOSQUITTOCONF_auth_opt_http_port=4000
-      - MOSQUITTOCONF_auth_opt_http_getuser_uri=/mqtt/user
-      - MOSQUITTOCONF_auth_opt_http_superuser_uri=/mqtt/superuser
-      - MOSQUITTOCONF_auth_opt_http_aclcheck_uri=/mqtt/acl
+      - EMQX_WAIT_TIME=60
+      - EMQX_LOADED_PLUGINS="emqx_recon,emqx_retainer,emqx_management,emqx_dashboard, emqx_auth_http"
+      - EMQX_ADMIN_PASSWORD=p455w0rd
+      - EMQX_AUTH__HTTP__AUTH_REQ=http://app:4000/mqtt/user
+      - EMQX_AUTH__HTTP__AUTH_REQ__method=post
+      - EMQX_AUTH__HTTP__AUTH_REQ__params=clientid=%c,username=%u,password=%P
+      - EMQX_AUTH__HTTP__SUPER_REQ=http://app:4000/mqtt/superuser
+      - EMQX_AUTH__HTTP__SUPER_REQ__method=post
+      - EMQX_AUTH__HTTP__SUPER_REQ__params=clientid=%c,username=%u
+      - EMQX_AUTH__HTTP__ACL_REQ=http://app:4000/mqtt/acl
+      - EMQX_AUTH__HTTP__ACL_REQ__method=post
+      - EMQX_AUTH__HTTP__ACL_REQ__params=access=username=%u,topic=%t
+      - EMQX_LOG__CONSOLE=console
+      - EMQX_LOG__CONSOLE__LEVEL=debug
     ports:
       - 1883:1883
-      - 9001:9001
-# 1883 for mqtt
-# 9001 for websocket
+      - 8083:8083
+      - 18083:18083
 
 networks:
   default:
