@@ -31,8 +31,10 @@ import { Subscription } from 'rxjs';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: environment.mqttHost,
-  port: 9883,
-  path: '/'
+  port: environment.mqttPort,
+  path: environment.mqttPath,
+  username: "JohnDoEx",
+  password: "foobarfoo"
 };
 
 @NgModule({

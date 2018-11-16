@@ -3,7 +3,6 @@ MAINTAINER David Martin <davidmartingarcia0@gmail.com>
 
 #Base dependencies
 RUN apt-get clean && apt-get update && apt-get install -y --force-yes --fix-missing \
-  ssh \
   build-essential \
   inotify-tools
 
