@@ -19,25 +19,41 @@ spec:
     spec:
       containers:
       - env:
-        - name: MOSQUITTOCONF_auth_opt_backends
-          value: http
-        - name: MOSQUITTOCONF_auth_opt_http_aclcheck_uri
-          value: /mqtt/acl
-        - name: MOSQUITTOCONF_auth_opt_http_getuser_uri
-          value: /mqtt/user
-        - name: MOSQUITTOCONF_auth_opt_http_hostname
-          value: app
-        - name: MOSQUITTOCONF_auth_opt_http_port
-          value: "4000"
-        - name: MOSQUITTOCONF_auth_opt_http_superuser_uri
-          value: /mqtt/superuser
-        - name: MOSQUITTOCONF_auth_opt_superusers
-          value: admin
-        image: eu.gcr.io/sense-219918/sense_mqtt:$TAG
+        - name: EMQX_WAIT_TIME
+          value: '60'
+        - name: EMQX_LOADED_PLUGINS
+          value: 'emqx_recon,emqx_retainer,emqx_management,emqx_dashboard, emqx_auth_http'
+        - name: EMQX_ADMIN_PASSWORD
+          value: 'p455w0rd'
+        - name: EMQX_AUTH__HTTP__AUTH_REQ
+          value: 'http://app:4000/mqtt/user'
+        - name: EMQX_AUTH__HTTP__AUTH_REQ__method
+          value: 'post'
+        - name: EMQX_AUTH__HTTP__AUTH_REQ__params
+          value: 'clientid=%c,username=%u,password=%P'
+        - name: EMQX_AUTH__HTTP__SUPER_REQ
+          value: 'http://app:4000/mqtt/superuser'
+        - name: EMQX_AUTH__HTTP__SUPER_REQ__method
+          value: 'post'
+        - name: EMQX_AUTH__HTTP__SUPER_REQ__params
+          value: 'clientid=%c,username=%u'
+        - name: EMQX_AUTH__HTTP__ACL_REQ
+          value: 'http://app:4000/mqtt/acl'
+        - name: EMQX_AUTH__HTTP__ACL_REQ__method
+          value: 'post'
+        - name: EMQX_AUTH__HTTP__ACL_REQ__params
+          value: 'access=username=%u,topic=%t'
+        - name: EMQX_LOG__CONSOLE
+          value: 'console'
+        - name: EMQX_LOG__CONSOLE__LEVEL
+          value: 'debug'
+        image: emqx/emqx:latest
         name: mqtt
         ports:
         - containerPort: 1883
-        - containerPort: 9883
+          name: mqtt
+        - containerPort: 8083
+          name: ws
         resources:
           requests:
             cpu: "10m"

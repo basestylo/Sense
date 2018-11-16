@@ -10,12 +10,12 @@ metadata:
   name: mqtt
 spec:
   ports:
-  - name: "1883"
+  - name: "mqtt"
     port: 1883
     targetPort: 1883
-  - name: "9883"
-    port: 9883
-    targetPort: 9883
+  - name: "ws"
+    port: 8083
+    targetPort: 8083
   selector:
     io.kompose.service: mqtt
 status:

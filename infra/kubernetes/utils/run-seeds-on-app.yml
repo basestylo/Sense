@@ -1,8 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  # Unique key of the Job instance
-  name: run-seeds-app
+  name: run-seeds-on-app
 spec:
   containers:
   - name: db-migration
