@@ -83,7 +83,7 @@ defmodule Sense.Mixfile do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-    ["ecto.setup": ["ecto.drop", "ecto.create", "ecto.migrate", "ecto.seeds"],
+    ["ecto.setup": ["ecto.drop", "ecto.create", "ecto.migrate"],
      "ecto.seeds": ["run priv/repo/seeds.exs"],
      "ecto.reset": ["ecto.drop", "ecto.setup"],
      "test": ["deps.get", "ecto.create --quiet", "ecto.migrate", "test"]]
