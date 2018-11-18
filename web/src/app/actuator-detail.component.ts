@@ -3,6 +3,8 @@ import { Component, OnInit, OnDestroy }      from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location }               from '@angular/common';
 import { MatSnackBar }            from '@angular/material';
+import {MatSliderModule} from '@angular/material/slider';
+
 import { Observable }      from 'rxjs';
 import { Actuator }        from './actuator';
 import { ActuatorService } from './actuator.service';
@@ -36,9 +38,15 @@ export class ActuatorDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params
       .switchMap((params: Params) => this.actuatorService.getActuator(+params['device_id'], +params['id']))
-      .subscribe(actuator => this.actuator = actuator);
-    this.subscription = this._mqttService.observe('my/topic').subscribe((message: IMqttMessage) => {
-      this.message = message.payload.toString();
+      .subscribe(actuator => {
+        this.subscribe_actuator(1, 2);
+        this.actuator = actuator;
+      });
+  }
+
+  subscribe_actuator(device_id: number, actuator_id: number): void {
+    this.subscription = this._mqttService.observe('JohnDoEx/Heatersensor/actuator/Poolpump').subscribe((message: IMqttMessage) => {
+      this.actuator.value = Number(message.payload.toString());
     });
   }
 

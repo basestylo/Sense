@@ -8,6 +8,6 @@ export const environment = {
   serverUrl: "http://localhost:4200",
   apiUrl: "http://localhost:4000",
   mqttHost: "localhost",
-  mqttPort: 8083,
+  mqttPort: 9001,
   mqttPath: "/mqtt"
 };

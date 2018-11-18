@@ -117,7 +117,7 @@ services:
       - EMQX_LOG__CONSOLE__LEVEL=debug
     ports:
       - 1883:1883
-      - 8083:8083
+      - 9001:8083
       - 18083:18083
 
 networks:

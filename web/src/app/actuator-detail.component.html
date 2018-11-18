@@ -12,12 +12,14 @@
       <mat-select [(value)]="actuator.type" placeholder="Actuator type">
         <mat-option value="button">Button</mat-option>
         <mat-option value="value">Value</mat-option>
+        <mat-option value="slider">Slider</mat-option>
       </mat-select>
     </mat-form-field>    
     <mat-form-field>
       
       <input *ngIf="actuator.type == 'value'" matInput [(ngModel)]="actuator.value" placeholder="Value">
-      <mat-slide-toggle *ngIf="actuator.type != 'value'" matInput [(ngModel)]="+ actuator.value" placeholder="Value"></mat-slide-toggle>
+      <mat-slide-toggle *ngIf="actuator.type == 'button'" matInput [(ngModel)]="+ actuator.value" placeholder="Value"></mat-slide-toggle>
+      <mat-slider *ngIf="actuator.type == 'slider'" min="0" max="1024" step="1" [(ngModel)]="+ actuator.value" [thumbLabel]="true" placeholder="Value"></mat-slider>
       <input hidden matInput [(ngModel)]="actuator.value">
     </mat-form-field>
 
