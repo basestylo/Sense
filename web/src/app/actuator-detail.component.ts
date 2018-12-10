@@ -39,13 +39,13 @@ export class ActuatorDetailComponent implements OnInit, OnDestroy {
     this.route.params
       .switchMap((params: Params) => this.actuatorService.getActuator(+params['device_id'], +params['id']))
       .subscribe(actuator => {
-        this.subscribe_actuator(1, 2);
+        this.subscribe_actuator(actuator.device_id, actuator.id);
         this.actuator = actuator;
       });
   }
 
   subscribe_actuator(device_id: number, actuator_id: number): void {
-    this.subscription = this._mqttService.observe('JohnDoEx/Heatersensor/actuator/Poolpump').subscribe((message: IMqttMessage) => {
+    this.subscription = this._mqttService.observe(`JohnDoEx/${device_id}/actuator/${actuator_id}`).subscribe((message: IMqttMessage) => {
       this.actuator.value = Number(message.payload.toString());
     });
   }

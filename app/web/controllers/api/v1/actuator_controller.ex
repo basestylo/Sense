@@ -36,7 +36,7 @@ defmodule Sense.Api.V1.ActuatorController do
 
     case Repo.update(changeset) do
       {:ok, actuator} ->
-        Tortoise.Handler.SenseMQTT.send_message([actuator.device.user.username, actuator.device.name, actuator.name], actuator_params["value"] |> Integer.to_string)
+        Tortoise.Handler.SenseMQTT.send_message([actuator.device.user.username, actuator.device.id, actuator.id], actuator_params["value"] |> Integer.to_string)
         render(conn, "show.json", actuator: actuator)
       {:error, changeset} ->
         conn
