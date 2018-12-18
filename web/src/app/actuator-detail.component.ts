@@ -46,7 +46,8 @@ export class ActuatorDetailComponent implements OnInit, OnDestroy {
 
   subscribe_actuator(device_id: number, actuator_id: number): void {
     this.subscription = this._mqttService.observe(`JohnDoEx/${device_id}/actuator/${actuator_id}`).subscribe((message: IMqttMessage) => {
-      this.actuator.value = Number(message.payload.toString());
+      this.actuatorService.getActuator(device_id, actuator_id)
+        .then( actuator => this.actuator = actuator);
     });
   }
 
