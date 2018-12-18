@@ -23,13 +23,15 @@ spec:
           value: sense_prod
         - name: POSTGRES_USER
           value: postgres
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pg_data
         image: postgres:9.6.3
         name: postgres
         ports:
          - containerPort: 5432
         volumeMounts:
           - name: postgres-persistent-storage
-            mountPath: /var/lib/postgresql/db-data
+            mountPath: /var/lib/postgresql/data
         resources:
           requests:
             cpu: "250m"
