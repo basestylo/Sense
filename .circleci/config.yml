@@ -15,25 +15,25 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
-            - v1-mix-build-cache-{{ .Branch }}
-            - v1-mix-build-cache
+            - v2-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+            - v2-mix-build-cache-{{ .Branch }}
+            - v2-mix-build-cache
       - restore_cache:
           keys:
-            - v1-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
-            - v1-mix-deps-cache-{{ .Branch }}
-            - v1-mix-deps-cache
+            - v2-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+            - v2-mix-deps-cache-{{ .Branch }}
+            - v2-mix-deps-cache
       - run: mix local.hex --force && mix local.rebar --force
       - run: cd app && mix deps.get
       - run: cd app && mix credo list --strict
       - save_cache:
-          key: v1-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+          key: v2-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
           paths: "./app/deps"
       - save_cache:
-          key: v1-mix-deps-cache-{{ .Branch }}
+          key: v2-mix-deps-cache-{{ .Branch }}
           paths: "./app/deps"
       - save_cache:
-          key: v1-mix-deps-bundle-cache
+          key: v2-mix-deps-bundle-cache
           paths: "./app/deps"
 
   build-app:
@@ -65,34 +65,34 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
-            - v1-mix-build-cache-{{ .Branch }}
-            - v1-mix-build-cache
+            - v2-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+            - v2-mix-build-cache-{{ .Branch }}
+            - v2-mix-build-cache
       - restore_cache:
           keys:
-            - v1-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
-            - v1-mix-deps-cache-{{ .Branch }}
-            - v1-mix-deps-cache
+            - v2-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+            - v2-mix-deps-cache-{{ .Branch }}
+            - v2-mix-deps-cache
       - run: mix local.hex --force && mix local.rebar --force
       - run: cd app && mix deps.get
       - save_cache:
-          key: v1-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+          key: v2-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
           paths: "./app/deps"
       - save_cache:
-          key: v1-mix-deps-cache-{{ .Branch }}
+          key: v2-mix-deps-cache-{{ .Branch }}
           paths: "./app/deps"
       - save_cache:
-          key: v1-mix-deps-bundle-cache
+          key: v2-mix-deps-bundle-cache
           paths: "./app/deps"
       - run: cd app && mix test
       - save_cache:
-          key: v1-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+          key: v2-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
           paths: "./app/_build"
       - save_cache:
-          key: v1-mix-build-cache-{{ .Branch }}
+          key: v2-mix-build-cache-{{ .Branch }}
           paths: "./app/_build"
       - save_cache:
-          key: v1-mix-build-bundle-cache
+          key: v2-mix-build-bundle-cache
           paths: "./app/_build"
       - store_test_results:
           path: "./app/tmp/reports"
@@ -112,18 +112,18 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-npm-build-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
-            - v1-npm-build-cache-{{ .Branch }}
-            - v1-npm-build-cache
+            - v2-npm-build-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
+            - v2-npm-build-cache-{{ .Branch }}
+            - v2-npm-build-cache
       - run: cd web && npm install --silent
       - save_cache:
-          key: v1-npm-build-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
+          key: v2-npm-build-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
           paths: "./web/node_modules"
       - save_cache:
-          key: v1-npm-build-cache-{{ .Branch }}
+          key: v2-npm-build-cache-{{ .Branch }}
           paths: "./web/node_modules"
       - save_cache:
-          key: v1-npm-build-bundle-cache
+          key: v2-npm-build-bundle-cache
           paths: "./web/node_modules"
       - run: cd web && npm run test-headless
       - run: cd web && npm run e2e
@@ -141,18 +141,18 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-npm-build-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
-            - v1-npm-build-cache-{{ .Branch }}
-            - v1-npm-build-cache
+            - v2-npm-build-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
+            - v2-npm-build-cache-{{ .Branch }}
+            - v2-npm-build-cache
       - run: cd web && npm install --silent
       - save_cache:
-          key: v1-npm-build-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
+          key: v2-npm-build-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
           paths: "./web/node_modules"
       - save_cache:
-          key: v1-npm-build-cache-{{ .Branch }}
+          key: v2-npm-build-cache-{{ .Branch }}
           paths: "./web/node_modules"
       - save_cache:
-          key: v1-npm-build-bundle-cache
+          key: v2-npm-build-bundle-cache
           paths: "./web/node_modules"
       - run: cd web && npm run lint
 
@@ -164,7 +164,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-npm-deps-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
+            - v2-npm-deps-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
       - run: apt-get install -y kubectl gettext-base
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
@@ -173,7 +173,7 @@ jobs:
           gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}
       - run: cd infra && ./deploy-web.sh
       - save_cache:
-          key: v1-npm-deps-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
+          key: v2-npm-deps-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
           paths: "./web/node_modules"
       - run: ls -alh
       - run: ls -alh web
@@ -186,10 +186,10 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+            - v2-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
       - restore_cache:
           keys:
-            - v1-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+            - v2-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
       - run: apt-get install -y kubectl gettext-base
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
