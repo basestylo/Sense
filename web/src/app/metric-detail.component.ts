@@ -34,7 +34,7 @@ export class MetricDetailComponent implements OnInit {
       .subscribe(metric => this.metric = metric);
     this.route.params
       .switchMap((params: Params) => this.measureService.getMeasures(+params['device_id'], +params['id']))
-      .subscribe(measures => this.measures = measures);
+          .subscribe(measures => this.measures = measures.reverse());
     this.data = [
   {
     'name': 'Germany',
