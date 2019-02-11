@@ -65,9 +65,9 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v2-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
-            - v2-mix-build-cache-{{ .Branch }}
-            - v2-mix-build-cache
+            - v3-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+            - v3-mix-build-cache-{{ .Branch }}
+            - v3-mix-build-cache
       - restore_cache:
           keys:
             - v2-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
@@ -186,7 +186,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v2-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
+            - v3-mix-build-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
       - restore_cache:
           keys:
             - v2-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
