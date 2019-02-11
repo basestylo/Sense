@@ -1,11 +1,11 @@
 import 'rxjs/add/operator/switchMap';
-import { Component, OnInit, Input }      from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Location }               from '@angular/common';
+import { Location } from '@angular/common';
 import { DatePipe } from '@angular/common';
 
-import { Metric }        from './metric';
-import { Measure }        from './measure';
+import { Metric } from './metric';
+import { Measure } from './measure';
 import { MeasureService } from './measure.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class MeasureComponent implements OnInit {
 
   @Input()
   metric: Metric;
-  
+
   constructor(
     private measureService: MeasureService,
     private route: ActivatedRoute,
@@ -29,7 +29,7 @@ export class MeasureComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  
+
   create(): void {
     this.measureService.create(this.measure)
       .then(() => this.goBack());

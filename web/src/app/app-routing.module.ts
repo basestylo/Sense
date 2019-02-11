@@ -1,12 +1,12 @@
-import { NgModule }             from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DashboardComponent }      from './dashboard.component';
-import { DevicesComponent }        from './devices.component';
-import { DeviceDetailComponent }   from './device-detail.component';
-import { MetricsComponent }        from './metrics.component';
-import { ActuatorsComponent }      from './actuators.component';
-import { MetricDetailComponent }   from './metric-detail.component';
+import { DashboardComponent } from './dashboard.component';
+import { DevicesComponent } from './devices.component';
+import { DeviceDetailComponent } from './device-detail.component';
+import { MetricsComponent } from './metrics.component';
+import { ActuatorsComponent } from './actuators.component';
+import { MetricDetailComponent } from './metric-detail.component';
 import { ActuatorDetailComponent } from './actuator-detail.component';
 
 const routes: Routes = [

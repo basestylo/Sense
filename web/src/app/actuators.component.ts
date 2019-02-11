@@ -1,9 +1,9 @@
-import { Component, OnInit}       from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Router }                 from '@angular/router';
-import { Location }               from '@angular/common';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
-import { Actuator }        from './actuator';
+import { Actuator } from './actuator';
 import { ActuatorService } from './actuator.service';
 
 @Component({

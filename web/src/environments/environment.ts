@@ -5,9 +5,9 @@
 
 export const environment = {
   production: false,
-  serverUrl: "http://localhost:4200",
-  apiUrl: "http://localhost:4000",
-  mqttHost: "localhost",
+  serverUrl: 'http://localhost:4200',
+  apiUrl: 'http://localhost:4000',
+  mqttHost: 'localhost',
   mqttPort: 9001,
-  mqttPath: "/mqtt"
+  mqttPath: '/mqtt'
 };

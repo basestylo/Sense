@@ -1,7 +1,7 @@
-import { Component, OnInit}       from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Router }                 from '@angular/router';
-import { Location }               from '@angular/common';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { Metric }        from './metric';
 import { MetricService } from './metric.service';
@@ -12,7 +12,7 @@ import { MetricService } from './metric.service';
   styleUrls: [ './metrics.component.css' ]
 })
 
-export class MetricsComponent implements OnInit{
+export class MetricsComponent implements OnInit {
   metric: Metric;
   device_id: number;
 
@@ -33,7 +33,7 @@ export class MetricsComponent implements OnInit{
     description = description.trim();
 
     if (!name || !description) { return; }
-    var new_metric: Metric = {id: 0, name: name, description: description, device_id: this.device_id};
+    const new_metric: Metric = {id: 0, name: name, description: description, device_id: this.device_id};
 
      this.metricService.create(new_metric)
       .then( () => this.goBack());

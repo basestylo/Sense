@@ -1,15 +1,15 @@
 import 'rxjs/add/operator/switchMap';
-import { Component, OnInit }      from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Location }               from '@angular/common';
-import { MatSnackBar }            from '@angular/material';
+import { Location } from '@angular/common';
+import { MatSnackBar } from '@angular/material';
 
-import { Actuator }        from './actuator';
-import { Device }          from './device';
-import { Metric }          from './metric';
+import { Actuator } from './actuator';
+import { Device } from './device';
+import { Metric } from './metric';
 import { ActuatorService } from './actuator.service';
-import { DeviceService }   from './device.service';
-import { MetricService }   from './metric.service';
+import { DeviceService } from './device.service';
+import { MetricService } from './metric.service';
 
 @Component({
   selector: 'device-detail',

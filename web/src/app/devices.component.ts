@@ -1,9 +1,9 @@
 import { Component} from '@angular/core';
-import { Router }            from '@angular/router';
-import { Location }               from '@angular/common';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
-import { Device }                from './device';
-import { DeviceService }         from './device.service';
+import { Device } from './device';
+import { DeviceService } from './device.service';
 
 @Component({
   selector: 'my-devices',
@@ -23,7 +23,7 @@ export class DevicesComponent {
     name = name.trim();
     description = description.trim();
     if (!name || !description) { return; }
-    var new_device: Device = {id: 0, name: name, description: description, user_id: 1};
+    const new_device: Device = {id: 0, name: name, description: description, user_id: 1};
 
      this.deviceService.create(new_device)
       .then( () => this.goBack());
@@ -33,4 +33,3 @@ export class DevicesComponent {
     this.location.back();
   }
 }
-

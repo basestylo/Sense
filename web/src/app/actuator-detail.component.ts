@@ -1,12 +1,12 @@
 import 'rxjs/add/operator/switchMap';
-import { Component, OnInit, OnDestroy }      from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Location }               from '@angular/common';
-import { MatSnackBar }            from '@angular/material';
+import { Location } from '@angular/common';
+import { MatSnackBar } from '@angular/material';
 import {MatSliderModule} from '@angular/material/slider';
 
-import { Observable }      from 'rxjs';
-import { Actuator }        from './actuator';
+import { Observable } from 'rxjs';
+import { Actuator } from './actuator';
 import { ActuatorService } from './actuator.service';
 import { Subscription } from 'rxjs';
 import {

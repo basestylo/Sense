@@ -1,6 +1,6 @@
-import { Injectable }    from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
-import { environment }   from '../environments/environment';
+import { environment } from '../environments/environment';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -47,7 +47,7 @@ export class MetricService {
   }
 
   update(metric: Metric): Promise<Metric> {
-  var body:any={metric: metric};
+  const body:any = { metric: metric };
     const url =  `${this.devicesUrl}/${metric.device_id}/metrics/${metric.id}`;
     return this.http
       .put(url, JSON.stringify(body), {headers: this.headers})

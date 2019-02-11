@@ -1,15 +1,14 @@
 import 'rxjs/add/operator/switchMap';
-import { Component, OnInit }      from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Location }               from '@angular/common';
-import { MatSnackBar }            from '@angular/material';
+import { Location } from '@angular/common';
+import { MatSnackBar } from '@angular/material';
 
-import { Metric }        from './metric';
-import { Measure }        from './measure';
+import { Metric } from './metric';
+import { Measure } from './measure';
 import { MetricService } from './metric.service';
 import { MeasureService } from './measure.service';
 import { MeasureComponent } from './measure.component';
-
 
 @Component({
   selector: 'metric-detail',
@@ -38,29 +37,29 @@ export class MetricDetailComponent implements OnInit {
       .subscribe(measures => this.measures = measures);
     this.data = [
   {
-    "name": "Germany",
-    "series": [
+    'name': 'Germany',
+    'series': [
       {
-        "name": "2010",
-        "value": 7300000
+        'name': '2010',
+        'value': 7300000
       },
       {
-        "name": "2011",
-        "value": 8940000
+        'name': '2011',
+        'value': 8940000
       }
     ]
   },
 ​
   {
-    "name": "USA",
-    "series": [
+    'name': 'USA',
+    'series': [
       {
-        "name": "2010",
-        "value": 7870000
+        'name': '2010',
+        'value': 7870000
       },
       {
-        "name": "2011",
-        "value": 8270000
+        'name': '2011',
+        'value': 8270000
       }
     ]
   }
