@@ -26,5 +26,9 @@ spec:
         resources:
           requests:
             cpu: "10m"
+      volumes:
+        - name: influxdb-persistent-storage
+          persistenetVolumeClaim:
+            claimName: influxdb-pv-claim
       restartPolicy: Always
 status: {}
