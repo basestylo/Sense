@@ -1,14 +1,3 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Sense.Repo.insert!(%Sense.SomeModel{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
 alias Sense.{ User, Repo, Device, Metric, Measure, Actuator }
 
 user_john = User.changeset(%User{}, %{
@@ -17,7 +6,7 @@ user_john = User.changeset(%User{}, %{
       last_name: "Doe",
       username: "JohnDoEx",
       password: "foobarfoo"
-      
+
 }) |> Repo.insert!
 
 random_user = User.changeset(%User{}, %{
@@ -27,7 +16,7 @@ random_user = User.changeset(%User{}, %{
       username: Faker.Internet.user_name,
       password: "mypassword"
 }) |> Repo.insert!
-      
+
 device_1 = Device.changeset(%Device{}, %{
       name: "Heater sensor",
       description: "This sensor give info about heater status",
@@ -86,22 +75,9 @@ device_2_actuator_1 = Actuator.changeset(%Actuator{}, %{
 Sense.Measure.delete_database
 Sense.Measure.create_database
 
-Measure.write_measure(device_1_metric_1, 1.0)
-Measure.write_measure(device_1_metric_1, 2.0)
-Measure.write_measure(device_1_metric_1, 3.0)
-Measure.write_measure(device_1_metric_1, 5.0)
-Measure.write_measure(device_1_metric_1, 4.0)
-Measure.write_measure(device_1_metric_1, 3.0)
-Measure.write_measure(device_1_metric_1, 1.0)
-Measure.write_measure(device_1_metric_1, 3.0)
-Measure.write_measure(device_1_metric_2, 4.0)
-Measure.write_measure(device_1_metric_2, 5.0)
-Measure.write_measure(device_1_metric_2, 5.0)
-Measure.write_measure(device_1_metric_2, 6.0)
-Measure.write_measure(device_1_metric_2, 4.0)
-Measure.write_measure(device_2_metric_1, 6.0)
-Measure.write_measure(device_2_metric_1, 7.0)
-Measure.write_measure(device_2_metric_1, 8.0)
-Measure.write_measure(device_2_metric_1, 9.0)
-Measure.write_measure(device_2_metric_1, 10.0)
-
+for x <- 1..1000 do
+  IO.inspect "\r#{x}/1000"
+  Measure.write_measure(device_1_metric_1, 1.0 * Enum.random(0..10))
+  Measure.write_measure(device_1_metric_2, 5.0 * Enum.random(0..10))
+  Measure.write_measure(device_2_metric_1, 2.0 * Enum.random(0..10))
+end
