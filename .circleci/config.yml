@@ -2,7 +2,7 @@ version: 2
 jobs:
   linter-app:
     docker:
-      - image: elixir:1.7.3
+      - image: elixir:1.7.4
     steps:
       - setup_remote_docker
       - run:
@@ -38,7 +38,7 @@ jobs:
 
   build-app:
     docker:
-      - image: elixir:1.7.3
+      - image: elixir:1.7.4
         environment:
           - MIX_ENV=test
           - PG_USERNAME=sense
