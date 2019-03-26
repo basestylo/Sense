@@ -1,4 +1,4 @@
-FROM bitwalker/alpine-elixir-phoenix:latest
+FROM bitwalker/alpine-elixir-phoenix:1.7.3
 MAINTAINER David Martin <davidmartingarcia0@gmail.com>
 
 # Set exposed ports
@@ -8,21 +8,23 @@ WORKDIR /app
 ENV PORT=4000 MIX_ENV=prod
 
 # Cache elixir deps
+RUN mix local.hex --force && \
+    mix local.rebar --force
 ADD mix.exs mix.lock ./
 RUN mix do deps.get, deps.compile
 
+
 # Same with npm deps
-ADD assets/package.json assets/
-RUN cd assets && \
-    npm install
+ADD package.json ./
+RUN npm install
 
 ADD . .
 
-# Run frontend build, compile, and digest assets
-RUN cd assets/ && \
-    npm run deploy && \
-    cd - && \
-    mix do compile, phx.digest
+# Use for frontend versions - Run frontend build, compile, and digest assets
+# RUN npm run deploy && \
+#    mix do compile, phx.digest
+
+RUN mix compile
 
 ENTRYPOINT []
 CMD ["mix", "phoenix.server"]
