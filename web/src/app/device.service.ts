@@ -47,8 +47,9 @@ export class DeviceService {
   }
 
   update(device: Device): Promise<Device> {
-  var body:any = { device: device };
+    const body: any = { device: device };
     const url = `${this.devicesUrl}/${device.id}`;
+
     return this.http
       .put(url, JSON.stringify(body), {headers: this.headers})
       .toPromise()

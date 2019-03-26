@@ -3,11 +3,11 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Metric }        from './metric';
+import { Metric } from './metric';
 import { MetricService } from './metric.service';
 
 @Component({
-  selector: 'my-metrics',
+  selector: 'app-my-metrics',
   templateUrl: './metrics.component.html',
   styleUrls: [ './metrics.component.css' ]
 })

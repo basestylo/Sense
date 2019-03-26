@@ -9,7 +9,7 @@ import { Measure } from './measure';
 import { MeasureService } from './measure.service';
 
 @Component({
-  selector: 'measure',
+  selector: 'app-measure',
   templateUrl: './measure.component.html',
   styleUrls: [ './measure.component.css' ]
 })

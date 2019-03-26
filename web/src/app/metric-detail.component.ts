@@ -11,10 +11,11 @@ import { MeasureService } from './measure.service';
 import { MeasureComponent } from './measure.component';
 
 @Component({
-  selector: 'metric-detail',
+  selector: 'app-metric-detail',
   templateUrl: './metric-detail.component.html',
   styleUrls: [ './metric-detail.component.css' ]
 })
+
 export class MetricDetailComponent implements OnInit {
   metric: Metric;
   measures: Measure[];

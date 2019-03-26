@@ -17,7 +17,7 @@ import {
 } from 'ngx-mqtt';
 
 @Component({
-  selector: 'actuator-detail',
+  selector: 'app-actuator-detail',
   templateUrl: './actuator-detail.component.html',
   styleUrls: [ './actuator-detail.component.css' ]
 })

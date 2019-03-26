@@ -33,8 +33,8 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: environment.mqttHost,
   port: environment.mqttPort,
   path: environment.mqttPath,
-  username: "JohnDoEx",
-  password: "foobarfoo"
+  username: 'JohnDoEx',
+  password: 'foobarfoo'
 };
 
 @NgModule({

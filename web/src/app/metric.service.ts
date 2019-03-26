@@ -47,8 +47,9 @@ export class MetricService {
   }
 
   update(metric: Metric): Promise<Metric> {
-  const body:any = { metric: metric };
-    const url =  `${this.devicesUrl}/${metric.device_id}/metrics/${metric.id}`;
+    const body: any = { metric: metric };
+    const url = `${this.devicesUrl}/${metric.device_id}/metrics/${metric.id}`;
+
     return this.http
       .put(url, JSON.stringify(body), {headers: this.headers})
       .toPromise()

@@ -6,7 +6,7 @@ import { Device } from './device';
 import { DeviceService } from './device.service';
 
 @Component({
-  selector: 'my-devices',
+  selector: 'app-my-devices',
   templateUrl: './devices.component.html',
   styleUrls: [ './devices.component.css' ]
 })

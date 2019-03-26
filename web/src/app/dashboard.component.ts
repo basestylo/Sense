@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Device }        from './device';
+import { Device } from './device';
 import { DeviceService } from './device.service';
 
 @Component({
-  selector: 'my-dashboard',
+  selector: 'app-my-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: [ './dashboard.component.css' ]
 })

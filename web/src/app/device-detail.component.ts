@@ -12,7 +12,7 @@ import { DeviceService } from './device.service';
 import { MetricService } from './metric.service';
 
 @Component({
-  selector: 'device-detail',
+  selector: 'app-device-detail',
   templateUrl: './device-detail.component.html',
   styleUrls: [ './device-detail.component.css' ]
 })

@@ -7,12 +7,12 @@ import { Actuator } from './actuator';
 import { ActuatorService } from './actuator.service';
 
 @Component({
-  selector: 'my-actuators',
+  selector: 'app-my-actuators',
   templateUrl: './actuators.component.html',
   styleUrls: [ './actuators.component.css' ]
 })
 
-export class ActuatorsComponent implements OnInit{
+export class ActuatorsComponent implements OnInit {
   actuator: Actuator;
   device_id: number;
 
@@ -33,9 +33,9 @@ export class ActuatorsComponent implements OnInit{
     description = description.trim();
 
     if (!name || !description) { return; }
-    var new_actuator: Actuator = {id: 0, name: name, description: description, device_id: this.device_id, value: 0, type: "button"};
+    const new_actuator: Actuator = {id: 0, name: name, description: description, device_id: this.device_id, value: 0, type: 'button'};
 
-     this.actuatorService.create(new_actuator)
+    this.actuatorService.create(new_actuator)
       .then( () => this.goBack());
   }
 
