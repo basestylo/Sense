@@ -209,7 +209,7 @@ jobs:
 
   deploy-mqtt:
     docker:
-      - image: google/cloud-sdk:latest
+      - image: google/cloud-sdk:234.0.0
     steps:
       - setup_remote_docker
       - checkout
