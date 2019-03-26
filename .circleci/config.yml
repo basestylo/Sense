@@ -2,7 +2,7 @@ version: 2
 jobs:
   linter-app:
     docker:
-      - image: elixir:1.7.4
+      - image: elixir:1.7
     steps:
       - setup_remote_docker
       - run:
@@ -38,7 +38,7 @@ jobs:
 
   build-app:
     docker:
-      - image: elixir:1.7.4
+      - image: elixir:1.7
         environment:
           - MIX_ENV=test
           - PG_USERNAME=sense
@@ -99,7 +99,7 @@ jobs:
 
   build-web:
     docker:
-      - image: node:10.12-slim
+      - image: node:10-slim
         environment:
           - CHROME_BIN=/usr/bin/chromium
     steps:
@@ -130,7 +130,7 @@ jobs:
 
   linter-web:
     docker:
-      - image: node:10.12-slim
+      - image: node:10-slim
     steps:
       - setup_remote_docker
       - run:
@@ -158,7 +158,7 @@ jobs:
 
   deploy-web:
     docker:
-      - image: google/cloud-sdk:latest
+      - image: google/cloud-sdk:234.0.0
     steps:
       - setup_remote_docker
       - checkout
@@ -184,7 +184,7 @@ jobs:
 
   deploy-app:
     docker:
-      - image: google/cloud-sdk:latest
+      - image: google/cloud-sdk:234.0.0
     steps:
       - setup_remote_docker
       - checkout
