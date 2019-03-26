@@ -165,7 +165,11 @@ jobs:
       - restore_cache:
           keys:
             - v2-npm-deps-cache-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
-      - run: apt-get install -y kubectl gettext-base
+      - run:
+          name: "Install base deps"
+          command: |
+            apt-get update -qq
+            apt-get install -y kubectl gettext-base
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
@@ -190,7 +194,11 @@ jobs:
       - restore_cache:
           keys:
             - v2-mix-deps-cache-{{ .Branch }}-{{ checksum "app/mix.lock" }}
-      - run: apt-get install -y kubectl gettext-base
+      - run:
+          name: "Install base deps"
+          command: |
+            apt-get update -qq
+            apt-get install -y kubectl gettext-base
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
@@ -205,7 +213,11 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: apt-get install -y kubectl gettext-base
+      - run:
+          name: "Install base deps"
+          command: |
+            apt-get update -qq
+            apt-get install -y kubectl gettext-base
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
