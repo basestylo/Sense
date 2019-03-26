@@ -1,4 +1,4 @@
-FROM node:10.12-slim as dev
+FROM node:10-slim as dev
 MAINTAINER David Martin <davidmartingarcia0@gmail.com>
 
 #Base dependencies
