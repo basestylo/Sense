@@ -30,8 +30,8 @@ export class ActuatorService {
       .catch(this.handleError);
   }
 
-  delete(id: number): Promise<void> {
-    const url = `${this.devicesUrl}/${id}`;
+  delete(actuator: Actuator): Promise<void> {
+    const url = `${this.devicesUrl}/${actuator.device_id}/actuators/${actuator.id}`;
     return this.http.delete(url, {headers: this.headers})
       .toPromise()
       .then(() => null)
@@ -49,7 +49,7 @@ export class ActuatorService {
 
   update(actuator: Actuator): Promise<Actuator> {
     actuator.value = +actuator.value
-    const body:any = { actuator: actuator };
+    const body: any = { actuator: actuator };
     const url = `${this.devicesUrl}/${actuator.device_id}/actuators/${actuator.id}`;
 
     return this.http
