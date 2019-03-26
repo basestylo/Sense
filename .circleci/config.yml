@@ -236,20 +236,29 @@ workflows:
       - deploy-web:
           requires:
             - build-app
+            - linter-app
+            - linter-web
           filters:
             branches:
-              only: master
+              only:
+                - master
+                - /dev-*/
       - deploy-app:
           requires:
             - build-app
+            - linter-app
+            - linter-web
           filters:
             branches:
-              only: master
+              only:
+                - master
+                - /dev-*/
       - approval-mqtt-deploy:
           type: approval
           filters:
             branches:
-              only: master
+              only:
+                - master
       - deploy-mqtt:
           requires:
             - approval-mqtt-deploy
