@@ -28,11 +28,11 @@ defmodule Sense do
     opts = [strategy: :one_for_one, name: Sense.Supervisor]
     Supervisor.start_link(children, opts)
 
-    {:ok, _pid} = Tortoise.Supervisor.start_child(
-      client_id: "my_client_id", user_name: "JohnDoEx", password: "foobarfoo",
-      handler: {Tortoise.Handler.SenseMQTT, []},
-      server: {Tortoise.Transport.Tcp, host: System.get_env("MQTT_HOST") || "localhost", port: 1883},
-      subscriptions: [{"#", 0}])
+    # {:ok, _pid} = Tortoise.Supervisor.start_child(
+      # client_id: "my_client_id", user_name: "JohnDoEx", password: "foobarfoo",
+      # handler: {Tortoise.Handler.SenseMQTT, []},
+      # server: {Tortoise.Transport.Tcp, host: System.get_env("MQTT_HOST") || "localhost", port: 1883},
+      # subscriptions: [{"#", 0}])
   end
 
   # Tell Phoenix to update the endpoint configuration

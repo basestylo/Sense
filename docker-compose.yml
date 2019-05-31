@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.6"
 services:
   # doc:
     # build:
@@ -30,6 +30,7 @@ services:
     build:
       context: ./app
     environment:
+      - DEBUG=1
       - MIX_ENV=dev
       - INFLUXDB_HOST=influxdb
       - PG_HOST=postgres
@@ -46,14 +47,6 @@ services:
       - ./app:/app
     stdin_open: true
     tty: true
-    deploy:
-      mode: replicated
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
 
   web:
     image: basestylo/sense_web
@@ -71,26 +64,14 @@ services:
       - app
     stdin_open: true
     tty: true
-    deploy:
-      mode: replicated
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
 
   postgres:
-    image: postgres:9.6.3
+    image: postgres:11.1-alpine
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=sense_dev
     ports:
       - 5432:5432
-    deploy:
-      mode: replicated
-      replicas: 1
-
 
   influxdb:
     image: influxdb:1.6

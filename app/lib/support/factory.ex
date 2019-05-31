@@ -2,7 +2,6 @@ defmodule Sense.Factory do
   use ExMachina.Ecto, repo: Sense.Repo
   Faker.start
   alias Sense.{Actuator, Device, Metric, User}
-  alias Comeonin.{Bcrypt}
 
   @moduledoc """
   Factory for testing, It has que basic objects

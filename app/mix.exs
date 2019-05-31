@@ -25,7 +25,7 @@ defmodule Sense.Mixfile do
   def application do
     [mod: {Sense, []},
      applications: [:rollbax, :tortoise, :corsica, :phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :ex_machina, :logger, :faker, :comeonin, :instream]]
+                    :postgrex, :ex_machina, :logger, :faker, :instream, :ecto_sql]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,40 +39,46 @@ defmodule Sense.Mixfile do
   defp deps do
     [
       # Base deps from Phoenix project
-      {:phoenix, "~> 1.2.4"},
-      {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.0"},
+      {:phoenix, "~> 1.4.6"},
+      {:phoenix_pubsub, "~> 1.1.2"},
+      {:ecto_sql, "~> 3.1.4"},
+      {:phoenix_ecto, "~> 4.0.0"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.6"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"},
+      {:phoenix_html, "~> 2.13.3"},
+      {:phoenix_live_reload, "~> 1.2.1", only: :dev},
+      {:gettext, "~> 0.16.1"},
+      {:plug_cowboy, "~> 2.0.2"},
 
       # Authentication
-      {:comeonin, "~> 3.0.2"},
-      {:guardian, "~> 0.14.4"},
+      {:phoenix_oauth2_provider, "~> 0.5.1"},
 
       # Testing and seeding data
-      {:ex_machina, "~> 2.0"},
-      {:faker, "~> 0.8"},
-      {:excoveralls, "~> 0.6", only: [:test, :ci]},
+      {:ex_machina, "~> 2.3"},
+      {:faker, "~> 0.12"},
+      {:excoveralls, "~> 0.11.1", only: [:test, :ci]},
       {:junit_formatter, "~> 1.3", only: [:test, :ci]},
 
       #Time Series database
-      {:instream, "~> 0.15" },
+      {:instream, "~> 0.21" },
 
       #CORS
-      {:plug, "~> 1.0"},
-      {:corsica, "~> 1.0"},
+      {:plug, "~> 1.8"},
+      {:corsica, "~> 1.1.2"},
 
       #MQTT
-      {:tortoise, "~> 0.9.2"},
+      {:tortoise, "~> 0.9.4"},
 
       #LINTER
-      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.0.5", only: [:dev, :test], runtime: false},
 
       #Error reporting
-      {:rollbax, ">= 0.9.2"}
+      {:rollbax, ">= 0.10.0"},
+
+      #to check
+      # {:phoenix_swagger, "~> 0.8.1"}
+      # {:open_api_spex, "~> 3.3"}
+      # {:cowboy_swagger, "~> 2.1"}
+      # {:edh_phoenix_swagger, "~> 0.2.1"}
     ]
   end
 

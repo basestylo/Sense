@@ -31,13 +31,6 @@ config :sense, Sense.Influx,
   scheme:    "http",
   writer:    Instream.Writer.Line
 
-config :guardian, Guardian,
-  issuer: "Sense.#{Mix.env}",
-  ttl: {30, :days},
-  verify_issuer: true,
-  serializer: Sense.GuardianSerializer,
-  secret_key: to_string(Mix.env) <> "SuperS3CR3tSeNS3ToK3n"
-
 enable_rollbar_reports =  case Mix.env do
                             "prod" ->
                               true

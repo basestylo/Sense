@@ -18,13 +18,8 @@ config :sense, Sense.Repo,
   hostname: "127.0.0.1",
   pool: Ecto.Adapters.SQL.Sandbox
 
-config :guardian, Guardian,
-  secret_key: "X3wcGjfsfnyH7zo7F3xL7FEekuvPflZMSIwwO2albcCECHNIV261QuBau8drgjCv"
-
 # Reduce the number of bcrypt rounds so it does not slow down test suite.
 # By default bcrypt_log_rounds is 12 and pbkdf2_rounds 160_000
-config :comeonin,
-  bcrypt_log_rounds: 1
 
 config :junit_formatter,
   report_file: "report_file_test.xml",
