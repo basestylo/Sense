@@ -49,9 +49,6 @@ defmodule Sense.Mixfile do
       {:gettext, "~> 0.16.1"},
       {:plug_cowboy, "~> 2.0.2"},
 
-      # Authentication
-      {:phoenix_oauth2_provider, "~> 0.5.1"},
-
       # Testing and seeding data
       {:ex_machina, "~> 2.3"},
       {:faker, "~> 0.12"},
@@ -75,6 +72,8 @@ defmodule Sense.Mixfile do
       {:rollbax, ">= 0.10.0"},
 
       #to check
+      # Authentication
+      # {:phoenix_oauth2_provider, "~> 0.5.1"},
       # {:phoenix_swagger, "~> 0.8.1"}
       # {:open_api_spex, "~> 3.3"}
       # {:cowboy_swagger, "~> 2.1"}
