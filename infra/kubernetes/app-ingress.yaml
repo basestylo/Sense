@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: api
+  namespace: senseapp
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    acme.cert-manager.io/http01-edit-in-place: "true"
+spec:
+  tls:
+  - hosts:
+      - api.senseapp.space
+    secretName: letsencrypt-api-prod
+  rules:
+  - host: api.senseapp.space
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: api
+          servicePort: 4000

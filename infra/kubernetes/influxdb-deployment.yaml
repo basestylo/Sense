@@ -1,24 +1,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: ./kompose convert
-    kompose.version: ""
-  creationTimestamp: null
   labels:
-    io.kompose.service: influxdb
+    service: influxdb
   name: influxdb
+  namespace: senseapp
 spec:
   replicas: 1
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: influxdb
+        service: influxdb
     spec:
       containers:
-      - image: influxdb:1.6
+      - image: influxdb:1.7
         name: influxdb
         ports:
         - containerPort: 8086
@@ -28,7 +23,7 @@ spec:
             cpu: "10m"
       volumes:
         - name: influxdb-persistent-storage
-          persistenetVolumeClaim:
+          persistentVolumeClaim:
             claimName: influxdb-pv-claim
       restartPolicy: Always
 status: {}

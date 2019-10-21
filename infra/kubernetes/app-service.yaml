@@ -1,26 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: 2018-10-31T00:55:36Z
-  generateName: app-
   labels:
-    io.kompose.service: app
-  name: app-kdmvk
-  namespace: default
-  resourceVersion: "3021"
-  selfLink: /api/v1/namespaces/default/services/app-kdmvk
-  uid: ad539614-dca7-11e8-9388-42010a8401dc
+    service: api
+  name: api
+  namespace: senseapp
 spec:
-  clusterIP: 10.19.243.3
-  externalTrafficPolicy: Cluster
   ports:
-  - nodePort: 30301
-    port: 80
+  - port: 4000
     protocol: TCP
     targetPort: 4000
   selector:
-    io.kompose.service: app
-  sessionAffinity: None
-  type: LoadBalancer
-status:
-  loadBalancer: {}
+    service: api
+  type: ClusterIP

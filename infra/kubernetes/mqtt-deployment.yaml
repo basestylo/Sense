@@ -1,21 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: ./kompose convert
-    kompose.version: ""
-  creationTimestamp: null
   labels:
-    io.kompose.service: mqtt
+    service: mqtt
   name: mqtt
+  namespace: senseapp
 spec:
   replicas: 1
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: mqtt
+        service: mqtt
     spec:
       containers:
       - env:
@@ -26,27 +21,29 @@ spec:
         - name: EMQX_ADMIN_PASSWORD
           value: 'p455w0rd'
         - name: EMQX_AUTH__HTTP__AUTH_REQ
-          value: 'http://app:4000/mqtt/user'
+          value: 'http://api:4000/mqtt/user'
         - name: EMQX_AUTH__HTTP__AUTH_REQ__method
           value: 'post'
         - name: EMQX_AUTH__HTTP__AUTH_REQ__params
           value: 'clientid=%c,username=%u,password=%P'
         - name: EMQX_AUTH__HTTP__SUPER_REQ
-          value: 'http://app:4000/mqtt/superuser'
+          value: 'http://api:4000/mqtt/superuser'
         - name: EMQX_AUTH__HTTP__SUPER_REQ__method
           value: 'post'
         - name: EMQX_AUTH__HTTP__SUPER_REQ__params
           value: 'clientid=%c,username=%u'
         - name: EMQX_AUTH__HTTP__ACL_REQ
-          value: 'http://app:4000/mqtt/acl'
+          value: 'http://api:4000/mqtt/acl'
         - name: EMQX_AUTH__HTTP__ACL_REQ__method
           value: 'post'
         - name: EMQX_AUTH__HTTP__ACL_REQ__params
           value: 'access=username=%u,topic=%t'
         - name: EMQX_LOG__CONSOLE
-          value: 'console'
+          value: 'both'
         - name: EMQX_LOG__CONSOLE__LEVEL
           value: 'debug'
+        - name: EMQX_LISTENER__WS__EXTERNAL__MQTT_PATH
+          value: '/wss'
         image: emqx/emqx:latest
         name: mqtt
         ports:
@@ -56,6 +53,5 @@ spec:
           name: ws
         resources:
           requests:
-            cpu: "10m"
+            cpu: "100m"
       restartPolicy: Always
-status: {}

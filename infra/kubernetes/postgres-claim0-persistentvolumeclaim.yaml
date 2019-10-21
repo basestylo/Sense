@@ -3,8 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: postgres-pv-claim
   labels:
-    io.kompose.service: postgres-claim0
+    app: sense
+  namespace: senseapp
 spec:
+  storageClassName: rook-ceph-block
   accessModes:
     - ReadWriteOnce
   resources:

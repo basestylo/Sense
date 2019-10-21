@@ -1,1 +1,1 @@
-kubectl create -f influxdb-service.yaml,postgres-service.yaml,app-deployment.yaml,app-claim0-persistentvolumeclaim.yaml,influxdb-deployment.yaml,mqtt-deployment.yaml,postgres-deployment.yaml,web-deployment.yaml,web-claim0-persistentvolumeclaim.yaml
+kubectl apply -f influxdb-service.yaml,postgres-service.yaml,app-deployment.yaml,app-claim0-persistentvolumeclaim.yaml,influxdb-deployment.yaml,mqtt-deployment.yaml,postgres-deployment.yaml,web-deployment.yaml,web-claim0-persistentvolumeclaim.yaml

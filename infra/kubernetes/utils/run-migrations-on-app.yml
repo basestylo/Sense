@@ -2,10 +2,11 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: run-migrations-on-app
+  namespace: senseapp
 spec:
   containers:
   - name: db-migration
-    image: eu.gcr.io/sense-219918/sense_app:latest
+    image: basestylo/sense_app:latest
     resources:
       requests:
         cpu: "10m"
