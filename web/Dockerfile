@@ -18,11 +18,12 @@ CMD ["npm", "run", "start"]
 #Multistage build angular for prod env
 FROM node:10.12-slim as build-stage
 # ENV NODE_ENV production
-ADD . /app
+COPY ./package.json /app/
+COPY ./package-lock.json /app/
 WORKDIR /app
 RUN npm install --silent
 ARG configuration=production
-
+COPY . /app
 RUN npm run build -- --output-path=./dist/out --configuration $configuration
 
 #Multistage production server
