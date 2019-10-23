@@ -1,4 +1,4 @@
-FROM bitwalker/alpine-elixir-phoenix:1.7.3
+FROM bitwalker/alpine-elixir-phoenix:1.8.1
 MAINTAINER David Martin <davidmartingarcia0@gmail.com>
 
 # Set exposed ports
@@ -27,4 +27,4 @@ ADD . .
 RUN mix compile
 
 ENTRYPOINT []
-CMD ["mix", "phoenix.server"]
+CMD ["mix", "phx.server"]

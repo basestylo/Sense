@@ -1,21 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: ./kompose convert
-    kompose.version: ""
-  creationTimestamp: null
   labels:
-    io.kompose.service: postgres
+    service: postgres
   name: postgres
+  namespace: senseapp
 spec:
   replicas: 1
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: postgres
+        service: postgres
     spec:
       containers:
       - env:
@@ -25,7 +20,7 @@ spec:
           value: postgres
         - name: PGDATA
           value: /var/lib/postgresql/data/pg_data
-        image: postgres:9.6.3
+        image: postgres:11
         name: postgres
         ports:
          - containerPort: 5432

@@ -1,26 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: 2018-10-31T00:56:55Z
-  generateName: web-
   labels:
-    io.kompose.service: web
-  name: web-dxxsv
-  namespace: default
-  resourceVersion: "3154"
-  selfLink: /api/v1/namespaces/default/services/web-dxxsv
-  uid: dca99219-dca7-11e8-9388-42010a8401dc
+    service: web
+  name: web
+  namespace: senseapp
 spec:
-  clusterIP: 10.19.241.24
-  externalTrafficPolicy: Cluster
   ports:
-  - nodePort: 30649
-    port: 80
+  - port: 8080
     protocol: TCP
     targetPort: 80
   selector:
-    io.kompose.service: web
-  sessionAffinity: None
-  type: LoadBalancer
-status:
-  loadBalancer: {}
+    service: webapp
+  type: ClusterIP

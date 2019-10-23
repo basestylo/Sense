@@ -1,7 +1,9 @@
 defmodule Sense.Endpoint do
   use Phoenix.Endpoint, otp_app: :sense
 
-  socket "/socket", Sense.UserSocket
+  socket "/socket", Sense.UserSocket,
+    websocket: true,
+    longpoll: true
 
   # Serve at "/" the static files from "priv/static" directory.
   #

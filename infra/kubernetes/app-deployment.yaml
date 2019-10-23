@@ -1,18 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
-    io.kompose.service: app
-  name: app
+    service: api
+  name: api
+  namespace: senseapp
 spec:
   replicas: 1
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: app
+        service: api
     spec:
       containers:
       - env:
@@ -28,7 +26,7 @@ spec:
           value: postgres
         - name: MQTT_HOST
           value: mqtt
-        image: eu.gcr.io/sense-219918/sense_app:$TAG
+        image: basestylo/sense_app:latest
         name: app
         ports:
           - containerPort: 4000
@@ -36,8 +34,3 @@ spec:
           requests:
             cpu: "10m"
       restartPolicy: Always
-      volumes:
-        - name: app-claim0
-          persistentVolumeClaim:
-            claimName: app-claim0
-status: {}

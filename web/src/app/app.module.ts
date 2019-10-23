@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -34,14 +34,15 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   port: environment.mqttPort,
   path: environment.mqttPath,
   username: 'JohnDoEx',
-  password: 'foobarfoo'
+  password: 'foobarfoo',
+  protocol: 'wss'
 };
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
@@ -54,7 +55,6 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     ActuatorDetailComponent,
     DeviceDetailComponent,
     DevicesComponent,
-   // DeviceSearchComponent,
     MetricsComponent,
     MetricDetailComponent,
     MeasureComponent

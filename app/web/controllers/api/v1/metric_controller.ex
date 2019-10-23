@@ -24,7 +24,7 @@ defmodule Sense.Api.V1.MetricController do
     end
   end
 
-  def show(conn, %{"id" => id, "device_id" => device_id}) do
+  def show(conn, %{"id" => id}) do
     metric = Repo.get!(Metric, id)
     render(conn, "show.json", metric: metric)
   end

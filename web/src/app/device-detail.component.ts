@@ -1,4 +1,3 @@
-import 'rxjs/add/operator/switchMap';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
@@ -32,14 +31,14 @@ export class DeviceDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params
-      .switchMap((params: Params) => this.deviceService.getDevice(+params['id']))
-      .subscribe(device => this.device = device);
+      .subscribe((params: Params) => this.deviceService.getDevice(+params['id'])
+                 .subscribe(device => this.device = device));
     this.route.params
-      .switchMap((params: Params) => this.metricService.getMetrics(+params['id']))
-      .subscribe(metrics => this.metrics = metrics);
+      .subscribe((params: Params) => this.metricService.getMetrics(+params['id'])
+                 .subscribe(metrics => this.metrics = metrics));
     this.route.params
-      .switchMap((params: Params) => this.actuatorService.getActuators(+params['id']))
-      .subscribe(actuators => this.actuators = actuators);
+      .subscribe((params: Params) => this.actuatorService.getActuators(+params['id'])
+                 .subscribe(actuators => this.actuators = actuators));
   }
 
   openSnackBar(message: string, action: string): void {
@@ -48,12 +47,12 @@ export class DeviceDetailComponent implements OnInit {
 
   save(): void {
     this.deviceService.update(this.device)
-      .then(() =>  this.openSnackBar('Device saved', ''));
+      .subscribe(() =>  this.openSnackBar('Device saved', ''));
   }
 
   destroy(): void {
     this.deviceService.delete(this.device.id)
-      .then(() => {
+      .subscribe(() => {
         this.openSnackBar('Metric destroyed', '');
         this.goBack()
       });

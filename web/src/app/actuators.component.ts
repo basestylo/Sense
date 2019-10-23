@@ -36,7 +36,7 @@ export class ActuatorsComponent implements OnInit {
     const new_actuator: Actuator = {id: 0, name: name, description: description, device_id: this.device_id, value: 0, type: 'button'};
 
     this.actuatorService.create(new_actuator)
-      .then( () => this.goBack());
+      .subscribe( () => this.goBack());
   }
 
   goBack(): void {

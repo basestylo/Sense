@@ -1,36 +1,32 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
-import 'rxjs/add/operator/toPromise';
-
 import { Measure } from './measure';
+import { catchError, map } from 'rxjs/operators';
+
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class MeasureService {
 
-  private headers = new Headers({'Content-Type': 'application/json'});
+  private headers = new HttpHeaders({'Content-Type': 'application/json'});
   private devicesUrl = environment.apiUrl + '/api/v1/devices';
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
-  getMeasures(device_id: number, metric_id: number): Promise<Measure[]> {
+  getMeasures(device_id: number, metric_id: number): Observable<Measure[]> {
     return this.http.get(`${this.devicesUrl}/${device_id}/metrics/${metric_id}/measures`)
-               .toPromise()
-               .then(response => response.json().data as Measure[])
-               .catch(this.handleError);
+      .pipe(
+        map( (response: any) => response.data as Measure[])
+      );
   }
 
-  create(measure: Measure): Promise<Measure> {
+  create(measure: Measure): Observable<Measure> {
     return this.http
       .post( `${this.devicesUrl}/${measure.metric_id}/measures`, JSON.stringify({measure: measure}), {headers: this.headers})
-      .toPromise()
-      .then(res => res.json().data as Measure)
-      .catch(this.handleError);
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
+      .pipe(
+        map( (response: any) => response.data as Measure )
+      );
   }
 }

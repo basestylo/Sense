@@ -1,14 +1,12 @@
-import 'rxjs/add/operator/switchMap';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material';
 import {MatSliderModule} from '@angular/material/slider';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Actuator } from './actuator';
 import { ActuatorService } from './actuator.service';
-import { Subscription } from 'rxjs';
 import {
   IMqttMessage,
   MqttModule,
@@ -37,17 +35,17 @@ export class ActuatorDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.params
-      .switchMap((params: Params) => this.actuatorService.getActuator(+params['device_id'], +params['id']))
-      .subscribe(actuator => {
-        this.subscribe_actuator(actuator.device_id, actuator.id);
-        this.actuator = actuator;
-      });
+      .subscribe((params: Params) => this.actuatorService.getActuator(+params['device_id'], +params['id'])
+                 .subscribe(actuator => {
+                   this.subscribe_actuator(actuator.device_id, actuator.id);
+                   this.actuator = actuator;
+                 }));
   }
 
   subscribe_actuator(device_id: number, actuator_id: number): void {
     this.subscription = this._mqttService.observe(`JohnDoEx/${device_id}/actuator/${actuator_id}`).subscribe((message: IMqttMessage) => {
       this.actuatorService.getActuator(device_id, actuator_id)
-        .then( actuator => this.actuator = actuator);
+        .subscribe( actuator => this.actuator = actuator);
     });
   }
 
@@ -61,12 +59,12 @@ export class ActuatorDetailComponent implements OnInit, OnDestroy {
 
   save(): void {
     this.actuatorService.update(this.actuator)
-      .then(() =>  this.openSnackBar('Actuator saved', ''));
+      .subscribe(() =>  this.openSnackBar('Actuator saved', ''));
   }
 
   destroy(): void {
     this.actuatorService.delete(this.actuator)
-      .then(() => {
+      .subscribe(() => {
         this.openSnackBar('Actuator destroyed', '');
         this.goBack();
       });

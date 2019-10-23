@@ -15,6 +15,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.deviceService.getDevices()
-          .then(devices => this.devices = devices);
+      .subscribe(devices => this.devices = devices);
   }
 }

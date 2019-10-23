@@ -1,64 +1,58 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
-import 'rxjs/add/operator/toPromise';
-
 import { Metric } from './metric';
+
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class MetricService {
 
-  private headers = new Headers({'Content-Type': 'application/json'});
+  private headers = new HttpHeaders({'Content-Type': 'application/json'});
   private devicesUrl = environment.apiUrl + '/api/v1/devices';
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
-  getMetrics(device_id: number): Promise<Metric[]> {
+  getMetrics(device_id: number): Observable<Metric[]> {
     return this.http.get(`${this.devicesUrl}/${device_id}/metrics`)
-               .toPromise()
-               .then(response => response.json().data as Metric[])
-               .catch(this.handleError);
+      .pipe(
+        map( (response: any) => response.data)
+      );
   }
 
 
-  getMetric(device_id: number, id: number): Promise<Metric> {
+  getMetric(device_id: number, id: number): Observable<Metric> {
     const url = `${this.devicesUrl}/${device_id}/metrics/${id}`;
     return this.http.get(url)
-      .toPromise()
-      .then(response => response.json().data as Metric)
-      .catch(this.handleError);
+      .pipe(
+        map( (response: any) => response.data)
+      );
+
   }
 
-  delete(id: number, device_id: number): Promise<void> {
+  delete(id: number, device_id: number): Observable<Object> {
     const url = `${this.devicesUrl}/${device_id}/metrics/${id}`;
-    return this.http.delete(url, {headers: this.headers})
-      .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
+    return this.http.delete(url, {headers: this.headers});
   }
 
-  create(metric: Metric): Promise<Metric> {
+  create(metric: Metric): Observable<Metric> {
     return this.http
       .post( `${this.devicesUrl}/${metric.device_id}/metrics`, JSON.stringify({metric: metric}), {headers: this.headers})
-      .toPromise()
-      .then(res => res.json().data as Metric)
-      .catch(this.handleError);
+      .pipe(
+        map( (response: any) => response.data)
+      );
   }
 
-  update(metric: Metric): Promise<Metric> {
+  update(metric: Metric): Observable<Metric> {
     const body: any = { metric: metric };
     const url = `${this.devicesUrl}/${metric.device_id}/metrics/${metric.id}`;
 
     return this.http
       .put(url, JSON.stringify(body), {headers: this.headers})
-      .toPromise()
-      .then(() => metric)
-      .catch(this.handleError);
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
+      .pipe(
+        map( (response: any) => response.data)
+      );
   }
 }

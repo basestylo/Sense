@@ -36,7 +36,7 @@ export class MetricsComponent implements OnInit {
     const new_metric: Metric = {id: 0, name: name, description: description, device_id: this.device_id};
 
      this.metricService.create(new_metric)
-      .then( () => this.goBack());
+      .subscribe( () => this.goBack());
   }
 
   goBack(): void {

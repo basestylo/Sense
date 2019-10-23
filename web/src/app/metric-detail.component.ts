@@ -1,4 +1,3 @@
-import 'rxjs/add/operator/switchMap';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
@@ -19,6 +18,9 @@ import { MeasureComponent } from './measure.component';
 export class MetricDetailComponent implements OnInit {
   metric: Metric;
   measures: Measure[];
+  device_id: number;
+  metric_id: number;
+
   public data: Array<any>;
 
   constructor(
@@ -31,40 +33,12 @@ export class MetricDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params
-      .switchMap((params: Params) => this.metricService.getMetric(+params['device_id'], +params['id']))
-      .subscribe(metric => this.metric = metric);
+      .subscribe((params: Params) => this.metricService.getMetric(+params['device_id'], +params['id'])
+                 .subscribe(metric => this.metric = metric));
     this.route.params
-      .switchMap((params: Params) => this.measureService.getMeasures(+params['device_id'], +params['id']))
-          .subscribe(measures => this.measures = measures.reverse());
-    this.data = [
-  {
-    'name': 'Germany',
-    'series': [
-      {
-        'name': '2010',
-        'value': 7300000
-      },
-      {
-        'name': '2011',
-        'value': 8940000
-      }
-    ]
-  },
-​
-  {
-    'name': 'USA',
-    'series': [
-      {
-        'name': '2010',
-        'value': 7870000
-      },
-      {
-        'name': '2011',
-        'value': 8270000
-      }
-    ]
-  }
-]
+      .subscribe((params: Params) => this.measureService.getMeasures(+params['device_id'], +params['id'])
+                 .subscribe(measures => this.measures = measures.reverse()));
+
   }
 
   openSnackBar(message: string, action: string) {
@@ -73,12 +47,12 @@ export class MetricDetailComponent implements OnInit {
 
   save(): void {
     this.metricService.update(this.metric)
-      .then(() =>  this.openSnackBar('Metric saved', ''));
+      .subscribe(() => this.openSnackBar('Metric saved', ''));
   }
 
   destroy(): void {
     this.metricService.delete(this.metric.id, this.metric.device_id)
-      .then(() => {
+      .subscribe(() => {
         this.openSnackBar('Metric destroyed', '');
         this.goBack();
       });

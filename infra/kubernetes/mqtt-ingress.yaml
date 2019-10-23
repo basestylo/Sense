@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mqtt
+  namespace: senseapp
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    acme.cert-manager.io/http01-edit-in-place: "false"
+    nginx.org/websocket-services: "mqtt"
+    nginx.org/proxy-read-timeout: "3600s"
+    nginx.org/proxy-send-timeout: "3600s"
+spec:
+  rules:
+  - host: broker.senseapp.space
+    http:
+      paths:
+      - path: /wss
+        backend:
+          serviceName: mqtt
+          servicePort: 8083
+      - path: /mqtt
+        backend:
+          serviceName: mqtt
+          servicePort: 1883
+  tls:
+  - hosts:
+      - broker.senseapp.space
+    secretName: letsencrypt-broker-prod

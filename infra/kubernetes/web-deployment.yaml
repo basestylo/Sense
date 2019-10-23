@@ -1,18 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
-    io.kompose.service: web
-  name: web
+    service: webapp
+  name: webapp
+  namespace: senseapp
 spec:
   replicas: 1
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: web
+        service: webapp
     spec:
       containers:
       - env:
@@ -22,7 +20,7 @@ spec:
           value: postgres
         - name: PG_USERNAME
           value: postgres
-        image: eu.gcr.io/sense-219918/sense_web:$TAG
+        image: basestylo/sense_web:1570984827
         name: app
         ports:
           - containerPort: 4200
@@ -30,8 +28,3 @@ spec:
           requests:
             cpu: "10m"
       restartPolicy: Always
-      volumes:
-        - name: web-claim0
-          persistentVolumeClaim:
-            claimName: web-claim0
-status: {}
