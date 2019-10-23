@@ -26,7 +26,7 @@ export class DevicesComponent {
     const new_device: Device = {id: 0, name: name, description: description, user_id: 1};
 
      this.deviceService.create(new_device)
-      .then( () => this.goBack());
+      .subscribe( () => this.goBack());
   }
 
   goBack(): void {
