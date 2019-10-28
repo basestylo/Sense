@@ -19,7 +19,14 @@
       <h1> Measures</h1>
       <mat-tab-group>
         <mat-tab label="Measure chart">
-
+          <highcharts-chart
+            [Highcharts]="Highcharts"
+            [constructorType]="chartConstructor"
+            [options]="chartOptions"
+            [(update)]="updateFlag"
+            [oneToOne]="oneToOneFlag"
+            style="width: 1600px; height: 400px; display: block;"
+            ></highcharts-chart>
         </mat-tab>
         <mat-tab label="Measures table">
           <mat-list>

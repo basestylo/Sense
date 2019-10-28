@@ -29,6 +29,8 @@ import { IMqttMessage,
          IMqttServiceOptions } from 'ngx-mqtt';
 import { Subscription } from 'rxjs';
 
+import { HighchartsChartModule } from 'highcharts-angular';
+
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: environment.mqttHost,
   port: environment.mqttPort,
@@ -46,7 +48,8 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
-    MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
+    MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
+    HighchartsChartModule
   ],
   declarations: [
     AppComponent,
