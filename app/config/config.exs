@@ -31,18 +31,17 @@ config :sense, Sense.Influx,
   scheme:    "http",
   writer:    Instream.Writer.Line
 
-enable_rollbar_reports =  case Mix.env do
-                            "prod" ->
-                              true
-                            _ ->
-                              false
-                          end
+config :sentry,
+  dsn: System.get_env("SENTRY_TOKEN") || "token",
+  environment_name: Mix.env,
+  enable_source_code_context: true,
+  root_source_code_path: File.cwd!,
+  tags: %{
+    env: Mix.env
+  },
+  included_environments: [:prod]
 
-config :rollbax,
-  access_token: System.get_env("ROLLBAR_TOKEN") || "token",
-  environment: "#{Mix.env}",
-  enable_crash_reports: enable_rollbar_reports,
-  enabled: enable_rollbar_reports
+
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
