@@ -1,9 +1,12 @@
 defmodule Sense.MqttAuthenticatorController do
   use Sense.Web, :controller
   alias Sense.{User}
+  import Ecto.Query
 
   def user(conn, %{"username" => username, "password" => password}) do
-    case Repo.get_by(User, username: username, encrypted_password: password) do
+
+
+    case from(u in User, where: u.username == ^username and u.encrypted_password == ^password) |> Repo.one do
       nil ->
         conn
         |> put_status(:unauthorized)
