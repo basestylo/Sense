@@ -39,17 +39,15 @@ defmodule Sense.Measure do
   end
 
   def write_measure(metric, value, async \\ false) when is_float(value) do
-    case value do
-      nil ->
-        :error
-      _ ->
-        data = %Sense.Measure{}
-        data = %{data | fields: %{data.fields | value: value}}
-        data = %{data | tags: %{data.tags | metric_id: metric.id}}
+    data = %Sense.Measure{}
+    data = %{data | fields: %{data.fields | value: value}}
+    data = %{data | tags: %{data.tags | metric_id: metric.id}}
 
-        IO.inspect data
-        Influx.write(data, async: async)
-    end
+    Influx.write(data, async: async)
+  end
+
+  def write_measure(metric, value, async) do
+    :error
   end
 
   def delete_measures(metric) do
