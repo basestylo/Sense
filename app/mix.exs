@@ -24,7 +24,7 @@ defmodule Sense.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Sense, []},
-     applications: [:rollbax, :tortoise, :corsica, :phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
+     applications: [:tortoise, :corsica, :phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
                     :postgrex, :ex_machina, :logger, :faker, :instream, :ecto_sql]]
   end
 
@@ -68,7 +68,8 @@ defmodule Sense.Mixfile do
       {:credo, "~> 1.0.5", only: [:dev, :test], runtime: false},
 
       #Error reporting
-      {:rollbax, ">= 0.10.0"},
+      {:sentry, "~> 7.0"},
+      {:jason, "~> 1.1"},
 
       #to check
       # Authentication
